@@ -18,7 +18,7 @@ const shared = ['styles.css','details.css','showcase.css','docs.css','site.js','
 const posts = [];
 for (const name of (await readdir(path.join(root, 'src/content/blog'))).filter(name => name.endsWith('.md'))) {
   const source = await readFile(path.join(root, 'src/content/blog', name), 'utf8');
-  if (!/^draft:\\s*true\\s*$/m.test(source.split('---', 3)[1] || '')) posts.push(name);
+  if (!/^draft:\s*true\s*$/m.test(source.split('---', 3)[1] || '')) posts.push(name);
 }
 for (const name of [...mainRoutes, ...shared, ...posts.map(name => 'blog/' + name.slice(0,-3) + '/index.html')]) {
   const info = await stat(path.join(dist, name));
