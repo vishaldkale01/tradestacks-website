@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tradestacks.dev/</loc></url>
   <url><loc>https://tradestacks.dev/platform.html</loc></url>
+  <url><loc>https://tradestacks.dev/trading-engine.html</loc></url>
+  <url><loc>https://tradestacks.dev/dashboard.html</loc></url>
   <url><loc>https://tradestacks.dev/architecture.html</loc></url>
   <url><loc>https://tradestacks.dev/research.html</loc></url>
   <url><loc>https://tradestacks.dev/contact.html</loc></url>
