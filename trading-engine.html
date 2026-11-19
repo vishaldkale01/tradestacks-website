@@ -1,0 +1,113 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12"><meta name="description" content="Inside TradeStack's Python Bank Nifty and Nifty index-options research engine: market feeds, strategy taxonomy, signal filters, risk controls, paper execution and replay."><meta name="robots" content="index,follow"><link rel="canonical" href="https://tradestacks.dev/trading-engine.html"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/details.css"><link rel="stylesheet" href="/showcase.css"><meta property="og:type" content="website"><meta property="og:title" content="Trading Engine | TradeStack"><meta property="og:description" content="Inside TradeStack's Python Bank Nifty and Nifty index-options research engine: market feeds, strategy taxonomy, signal filters, risk controls, paper execution and replay."><meta property="og:url" content="https://tradestacks.dev/trading-engine.html"><title>Trading Engine | TradeStack</title></head><body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 38 38" fill="none"><path d="M8 11h22M19 11v18M10 23l6-6 7 5 6-8" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html" aria-current="page">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+<main id="main">
+<section class="page-hero"><div class="container"><div class="eyebrow"><span class="signal-pulse"></span> TRADESTACK / PYTHON RESEARCH ENGINE</div>
+  <h1>Engineering behind<br><em>every trading decision.</em></h1>
+  <p>Understand how TradeStack converts streaming market data into candidate signals, applies strategy and risk rules, simulates fills and records a position's complete lifecycle.</p>
+  <div class="page-pills"><span>PYTHON + FASTAPI</span><span>RULE-BASED</span><span>11 STRATEGY CLASSES</span><span>PAPER MODE</span></div>
+  <div class="detail-actions"><a class="button button-primary" href="#decision-path">Explore the decision path <span aria-hidden="true">↓</span></a><a class="button button-outline" href="/dashboard.html">See the dashboard <span aria-hidden="true">↗</span></a></div>
+</div></section>
+
+<section class="section page-content" id="decision-path"><div class="container">
+<div class="section-intro"><div><span class="section-overline">01 / EXECUTION PIPELINE</span><h2>From first tick<br><span>to recorded outcome.</span></h2></div><p>A simplified overview of the Python service. Every stage has a purpose; a candidate signal does not automatically become a trade.</p></div>
+<div class="engine-flow" aria-label="TradeStack decision pipeline">
+  <div class="engine-node"><span>01 / MARKET INPUT</span><h3>Upstox V3 WebSocket</h3><p>Index and option ticks, market depth and available option-chain context.</p></div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="engine-node"><span>02 / CONTEXT</span><h3>Analyze market structure</h3><p>1-minute candles, VWAP, EMA, ADX, RSI and 5/15-minute trend context.</p></div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="engine-node"><span>03 / STRATEGY</span><h3>Generate candidate</h3><p>Pattern and trend setups propose CALL, PUT or neutral outcomes.</p></div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="engine-node strong"><span>04 / FILTER + SCORE</span><h3>Approve or reject</h3><p>Time, trend, volatility, exhaustion, confirmation and scoring rules.</p></div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="engine-node"><span>05 / RISK + PAPER FILL</span><h3>Simulated position</h3><p>Session limits, sizing, spread/depth checks, entry and exit management.</p></div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="engine-node"><span>06 / JOURNAL</span><h3>Review and replay</h3><p>Trades, signals, exit context, fee estimates and recorded market events.</p></div>
+</div>
+<div class="note-band">This is a conceptual flow of code paths, not a live status monitor. Live broker execution is not available through the current public gateway.</div>
+</div></section>
+
+<section class="section bands-section" id="strategies"><div class="container">
+<div class="section-intro"><div><span class="section-overline">02 / STRATEGY LIBRARY</span><h2>Multiple setups.<br><span>One evaluation framework.</span></h2></div><p>The engine README documents 11 strategy classes and a range of named setups. Some strategies and flags can be disabled; nothing here claims each one is currently profitable.</p></div>
+<div class="strategy-groups">
+<article class="strategy-group"><div class="strategy-group-head"><span>01</span><h3>Momentum and trend</h3></div><p>Study directional moves, pullback confirmations and continuation opportunities using market structure and moving averages.</p><div class="strategy-tags"><code>IMPULSE_SCALP</code><code>TREND_PULLBACK</code><code>TREND_CONTINUATION</code><code>MOMENTUM_ENTRY</code><code>EMA_RETEST</code></div></article>
+<article class="strategy-group"><div class="strategy-group-head"><span>02</span><h3>Level and reference bounces</h3></div><p>Evaluate reactions around central pivot range, VWAP and nearby price levels under higher-timeframe checks.</p><div class="strategy-tags"><code>CPR_BOUNCE</code><code>VWAP_BOUNCE</code></div></article>
+<article class="strategy-group"><div class="strategy-group-head"><span>03</span><h3>Breakout and expansion</h3></div><p>Investigate inside-bar breaks, retests and compression-driven expansion with confirmation rules.</p><div class="strategy-tags"><code>INSIDE_BAR_BREAKOUT</code><code>BREAKOUT_RETEST</code><code>COMPRESSION_BREAKOUT</code></div></article>
+<article class="strategy-group"><div class="strategy-group-head"><span>04</span><h3>Reversal formations</h3></div><p>Detect potential trend shifts and formation-based reversals while checking directional context and counter-trend risk.</p><div class="strategy-tags"><code>ST_REVERSAL</code><code>DOJI_TOP_REVERSAL</code><code>DOJI_BOTTOM_REVERSAL</code><code>DOUBLE_TOP</code><code>DOUBLE_BOTTOM</code><code>HS_TOP</code><code>HS_BOTTOM</code></div></article>
+</div>
+<p class="small-source-note">Names reflect the engine's documented strategy taxonomy. Additional conditional candidates and feature flags are discussed in code. Available configurations may enable or suppress specific setups.</p>
+</div></section>
+
+<section class="section" id="validation"><div class="container">
+<div class="section-intro"><div><span class="section-overline">03 / SIGNAL VALIDATION</span><h2>A signal is only<br><span>the beginning.</span></h2></div><p>TradeStack's analytical code includes staged post-signal checks and a scoring threshold. The gate shown below is illustrative; it does not evaluate actual market conditions.</p></div>
+<div class="gate-layout">
+<div class="gate-list">
+  <div class="gate-item"><span>01</span><div><h3>Session and feature gates</h3><p>Allowed time windows and flags for specific setups.</p></div></div>
+  <div class="gate-item"><span>02</span><div><h3>Market alignment</h3><p>VWAP, Dow bias, 5/15-minute trends, ADX and counter-trend protection.</p></div></div>
+  <div class="gate-item"><span>03</span><div><h3>Quality and overextension</h3><p>Candle strength, exhaustion, Z-score/ALMA distance and regime context.</p></div></div>
+  <div class="gate-item"><span>04</span><div><h3>Signal score and risk</h3><p>Documented minimum signal score of 7, followed by independent capital and execution checks.</p></div></div>
+</div>
+<div class="gate-preview" aria-label="Illustrative signal screening example">
+  <div class="gate-preview-head"><span>SIGNAL REVIEW / ILLUSTRATION</span><span>NOT LIVE</span></div>
+  <div class="gate-preview-title">Candidate decision review</div>
+  <div class="gate-preview-row"><span>Market context</span><strong>REQUIRED</strong></div>
+  <div class="gate-preview-row"><span>Strategy evaluation</span><strong>REQUIRED</strong></div>
+  <div class="gate-preview-row"><span>Signal filters</span><strong>REQUIRED</strong></div>
+  <div class="gate-preview-row"><span>Minimum scoring gate</span><strong>7 · CONFIGURED</strong></div>
+  <div class="gate-preview-row"><span>Risk permission</span><strong>SEPARATE CHECK</strong></div>
+  <div class="gate-preview-foot"><span>Only evaluated candidates can progress to simulated execution.</span></div>
+</div>
+</div>
+</div></section>
+
+<section class="section bands-section" id="risk"><div class="container">
+<div class="section-intro"><div><span class="section-overline">04 / POSITION PROTECTION</span><h2>Built to define risk.<br><span>Not eliminate it.</span></h2></div><p>The code includes controls for capital exposure and active trade management. These are software mechanisms, not guarantees against loss or slippage.</p></div>
+<div class="risk-grid">
+  <article><span>01 / SESSION</span><h3>Daily drawdown lock</h3><p>Redis-backed risk state can block new entries after a configured daily-loss boundary. The gateway default specifies 5% of configured capital.</p></article>
+  <article><span>02 / ENTRY</span><h3>Capital &amp; liquidity checks</h3><p>Position-sizing calculations and option-spread/depth conditions are considered before simulated execution.</p></article>
+  <article><span>03 / POSITION</span><h3>Stop and profit management</h3><p>The lifecycle component contains initial stop, break-even, partial milestone, trailing and target-state logic.</p></article>
+  <article><span>04 / RESILIENCE</span><h3>Missing price protection</h3><p>The risk engine includes a block for unresolved exit pricing, keeping new entries restricted until reconciliation.</p></article>
+</div>
+<div class="note-band">Configuration values and enforcement differ by component and strategy version. The website does not claim the previously discussed “two-loss guard” is verified across all paths; that requires a separate runtime audit.</div>
+</div></section>
+
+<section class="section" id="lifecycle"><div class="container">
+<div class="section-intro"><div><span class="section-overline">05 / TRADE LIFECYCLE</span><h2>What happens<br><span>after a paper entry?</span></h2></div><p>The trade context tracks index-based stop/target levels while preserving option fill and P&amp;L details. A trade is monitored until an exit reason is recorded.</p></div>
+<div class="milestone-grid">
+<article><small>ENTRY</small><h3>Start position</h3><p>Simulated order context and entry conditions are recorded.</p></article>
+<article><small>PROTECT</small><h3>Move stop</h3><p>Configured break-even and profit-lock milestones may adjust index-based protection.</p></article>
+<article><small>FOLLOW</small><h3>Trail or exit</h3><p>Trailing, stop, target and adverse momentum behavior are evaluated by the position logic.</p></article>
+<article><small>REVIEW</small><h3>Close and audit</h3><p>Exit reason, fill data and estimated fees become part of the recorded trade history.</p></article>
+</div>
+<div class="note-band">Exit reasons and P&amp;L attribution must be reconciled against the actual data. Labels such as <code>PROFIT_LOCK</code> and <code>BREAK_EVEN</code> should not be taken as proof of a profitable close without the recorded prices and fees.</div>
+</div></section>
+
+<section class="section bands-section" id="replay"><div class="container">
+<div class="section-intro"><div><span class="section-overline">06 / REPLAY ENGINE</span><h2>Replay the inputs.<br><span>Question the outcome.</span></h2></div><p>The engine records tick and depth streams into date-partitioned Parquet data. Replay uses a simulation clock and a depth-aware fill model to inspect historical behavior.</p></div>
+<div class="capability-grid">
+<div class="capability"><span>01</span><h3>Capture</h3><p>Asynchronous market-data recording and session manifests.</p></div>
+<div class="capability"><span>02</span><h3>Synchronize</h3><p>Use a simulated clock instead of mixing live wall time into historical events.</p></div>
+<div class="capability"><span>03</span><h3>Model fills</h3><p>Evaluate order-book depth, timing and estimated transaction charges.</p></div>
+<div class="capability"><span>04</span><h3>Validate</h3><p>Check gaps, completeness and differences between replay and paper behavior.</p></div>
+</div>
+<div class="detail-actions"><a class="button button-primary" href="/research.html">Explore research methodology <span aria-hidden="true">↗</span></a><a class="button button-outline" href="/dashboard.html">See the operator dashboard <span aria-hidden="true">→</span></a></div>
+</div></section>
+</main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="/">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="/#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="/">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>
