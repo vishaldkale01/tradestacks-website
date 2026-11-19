@@ -1,0 +1,95 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12"><meta name="description" content="A transparent TradeStack research case study: October 16 2026 partial-session replay, baseline versus entry-quality filters, after-cost losses, and important validation limitations."><meta name="robots" content="index,follow"><link rel="canonical" href="https://tradestacks.dev/research-case-study.html"><link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/details.css"><link rel="stylesheet" href="/showcase.css"><link rel="stylesheet" href="/docs.css"><meta property="og:image" content="https://tradestacks.dev/assets/tradestack-logo.webp"><meta property="og:type" content="website"><meta property="og:title" content="Research Case Study: A Smaller Loss Is Not a Proven Edge | TradeStack"><meta property="og:description" content="A transparent TradeStack research case study: October 16 2026 partial-session replay, baseline versus entry-quality filters, after-cost losses, and important validation limitations."><meta property="og:url" content="https://tradestacks.dev/research-case-study.html"><title>Research Case Study | TradeStack</title></head><body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async"></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html" aria-current="page">Research</a>
+        <a href="/developers.html">Developers</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+<main id="main">
+<section class="page-hero case-hero"><div class="container"><div class="eyebrow"><span class="signal-pulse"></span> TRADESTACK / RESEARCH CASE STUDY 001</div>
+<h1>A smaller loss<br><em>is not a proven edge.</em></h1>
+<p>We tested whether additional entry-quality checks could change paper-replay outcomes. The recorded comparison improved one partial session, but it did not produce a profitable result or justify changing production strategy rules.</p>
+<div class="page-pills"><span>16 OCT 2026</span><span>09:15–11:40 IST</span><span>CONTROLLED REPLAY</span><span>LIMITED EVIDENCE</span></div>
+<div class="case-status"><span>RESEARCH ONLY</span><p>Repository-documented comparison. Arithmetic independently checked; original market recording and replay were not rerun for publication.</p></div>
+</div></section>
+
+<section class="section" id="experiment"><div class="container">
+<div class="section-intro"><div><span class="section-overline">01 / THE QUESTION</span><h2>Would a stricter entry gate<br><span>reduce poor trades?</span></h2></div><p>Instead of changing stop-loss rules after a loss, the experiment inspected whether completed candle information available at decision time could improve entry selection.</p></div>
+<div class="research-steps">
+<article class="research-step"><span>BASELINE</span><h3>Existing strategy</h3><p>Replay the documented frozen strategy without an additional quality gate.</p></article>
+<article class="research-step"><span>VARIANT A</span><h3>Immediate 1-minute quality</h3><p>Reject a directional candidate when completed 1-minute data shows adverse EMA5/MACD momentum or a two-candle exhaustion pattern.</p></article>
+<article class="research-step"><span>VARIANT B</span><h3>Completed 5-minute alignment</h3><p>Require the latest completed 5-minute candle direction and its close relative to EMA21 to agree with the candidate.</p></article>
+</div>
+<div class="note-band">The experimental code used only information already completed at the decision timestamp. The report says it temporarily patched the analyzer inside the replay research process; it did not alter the configured paper-trading strategy.</div>
+</div></section>
+
+<section class="section bands-section" id="results"><div class="container">
+<div class="section-intro"><div><span class="section-overline">02 / REPORTED RESULTS</span><h2>One filter helped.<br><span>None made money.</span></h2></div><p>All three variants were evaluated over the same recorded October 16 window. These values come from the internal experiment report, not audited live-account brokerage statements.</p></div>
+<div class="case-stats"><div><span>MARKET CALLBACK EVENTS</span><strong>57,579</strong><small>Reported recorded callbacks</small></div><div><span>ANALYZER EVALUATIONS</span><strong>380</strong><small>During the experiment window</small></div><div><span>CLOSED TRADES / VARIANT</span><strong>2</strong><small>Far too few for statistical inference</small></div></div>
+<div class="case-table-wrap"><table class="case-table">
+<thead><tr><th>Variant</th><th>Closed trades</th><th>Win rate</th><th>Gross P&amp;L</th><th>Net P&amp;L after costs</th><th>Profit factor</th></tr></thead>
+<tbody>
+<tr><th scope="row">Existing baseline</th><td>2</td><td>0%</td><td class="negative">−₹1,240.50</td><td class="negative">−₹1,459.77</td><td>0.00</td></tr>
+<tr><th scope="row">Immediate 1-minute quality</th><td>2</td><td>50%</td><td class="negative">−₹273.00</td><td class="negative">−₹491.05</td><td>0.51</td></tr>
+<tr><th scope="row">Completed 5-minute alignment</th><td>2</td><td>0%</td><td class="negative">−₹1,240.50</td><td class="negative">−₹1,459.77</td><td>0.00</td></tr>
+</tbody></table></div>
+<div class="loss-compare" aria-label="Comparison of negative net results; all three variants were net losing">
+<div class="loss-compare-head"><strong>Net loss magnitude</strong><span>Smaller bar means smaller reported loss, not profit</span></div>
+<div class="loss-row"><span>Baseline</span><div><i style="width:100%"></i></div><strong>−₹1,459.77</strong></div>
+<div class="loss-row"><span>1-min gate</span><div><i style="width:33.64%"></i></div><strong>−₹491.05</strong></div>
+<div class="loss-row"><span>5-min gate</span><div><i style="width:100%"></i></div><strong>−₹1,459.77</strong></div>
+</div>
+<div class="case-takeaway"><span>CALCULATED FROM REPORTED RESULTS</span><strong>₹968.72</strong><p>Improvement in net P&amp;L from baseline to the immediate 1-minute variant. The outcome remained <b>negative ₹491.05</b>. The difference is a path-dependent replay comparison, not a forecast.</p></div>
+</div></section>
+
+<section class="section" id="why"><div class="container">
+<div class="section-intro"><div><span class="section-overline">03 / WHY RESULTS CHANGED</span><h2>Changing one decision<br><span>changes the trade path.</span></h2></div><p>Different entries can change future cooldowns, open-position state, capital sizing and drawdown restrictions. Simply deleting losing trades from history would not recreate this counterfactual.</p></div>
+<div class="case-steps">
+<div><span>01</span><h3>Original signals reviewed</h3><p>For October 16, the report identifies rejected replay candidates at 09:33, 09:58 and 10:56 under the immediate 1-minute gate.</p></div>
+<div><span>02</span><h3>Later entries changed</h3><p>The altered sequence subsequently produced different entries at 09:46 and 11:07 due to the evolving session state.</p></div>
+<div><span>03</span><h3>Five-minute confirmation did not help</h3><p>The completed 5-minute gate still allowed the early losing positions; its reported after-cost outcome matched the baseline in this window.</p></div>
+</div>
+</div></section>
+
+<section class="section bands-section" id="limits"><div class="container">
+<div class="section-intro"><div><span class="section-overline">04 / LIMITATIONS FIRST</span><h2>What this experiment<br><span>does not prove.</span></h2></div><p>The report's limitations are as important as its numerical result. These findings are exploratory, not a release recommendation.</p></div>
+<div class="research-truth">
+<article class="truth-card"><h3>Only partial sessions</h3><p>Two partial sessions were usable in the cross-session investigation, with just two closed trades per October 16 variant. This cannot establish a robust expectancy estimate.</p></article>
+<article class="truth-card"><h3>Replay does not fully match paper</h3><p>The report says October 16 paper and replay outcomes were not identical. The controlled comparison supports hypothesis exploration, not a certified trade-by-trade reconstruction.</p></article>
+<article class="truth-card"><h3>Some fields are not reliable yet</h3><p>Replay trade setups were labeled <code>UNKNOWN</code>, preventing credible setup-level attribution from those rows.</p></article>
+<article class="truth-card"><h3>Net results have fee uncertainty</h3><p>Local fee estimates did not fully match broker estimates. The same cost model was used across variants, but absolute net P&amp;L retains uncertainty.</p></article>
+</div>
+<div class="note-band">An additional October 9 window had missing warmup data and no reconstructable trades; it was excluded. The October 14 partial window did not establish a reliable benefit.</div>
+</div></section>
+
+<section class="section" id="verification"><div class="container">
+<div class="section-intro"><div><span class="section-overline">05 / EVIDENCE STANDARD</span><h2>What was checked.<br><span>What still needs proof.</span></h2></div><p>We distinguish review of a source report and code from independently reproducing historical execution against the original private recording.</p></div>
+<div class="case-evidence">
+<div><span class="evidence-mark checked">✓</span><section><h3>Experiment report inspected</h3><p>Reviewed the internal <code>reports/research/immediate_1m_gate/FINDINGS.md</code> study, including cohort scope, all three result rows, exclusions and limitations.</p></section></div>
+<div><span class="evidence-mark checked">✓</span><section><h3>Reported arithmetic cross-checked</h3><p>Baseline implied costs: ₹219.27. Immediate-filter implied costs: ₹218.05. Net difference: +₹968.72. Both remain negative.</p></section></div>
+<div><span class="evidence-mark checked">✓</span><section><h3>Relevant engine implementation reviewed</h3><p>Replayed data handling, session manifest validation, virtual clock, fill simulator tests and research workflows exist in the private Python codebase.</p></section></div>
+<div><span class="evidence-mark partial">!</span><section><h3>Historical market recording not independently rerun</h3><p>The private October 16 raw recording was not processed afresh for this public case study. Numerical outputs remain attributed to the repository research report.</p></section></div>
+<div><span class="evidence-mark partial">!</span><section><h3>Broad independent replication not complete</h3><p>Additional complete sessions, fresh fee reconciliation, paper/replay parity and an out-of-sample cohort are needed before strategy promotion.</p></section></div>
+</div>
+</div></section>
+
+<section class="section bands-section" id="next"><div class="container narrow">
+<span class="section-overline">06 / THE DECISION</span><h2 class="page-section-title">Keep the hypothesis.<br><span>Do not promote the filter.</span></h2>
+<p class="lead-muted">The internal report explicitly recommended leaving <code>strategy-v2026.10.15</code> unchanged, collecting a larger paper-session cohort and monitoring the immediate 1-minute quality check in shadow mode. A better result across two trades is not evidence of repeatable profitability.</p>
+<div class="detail-actions"><a class="button button-primary" href="/developers.html">Read developer documentation <span aria-hidden="true">↗</span></a><a class="button button-outline" href="/research.html">Research methodology <span aria-hidden="true">→</span></a></div>
+</div></section></main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="#top"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="/#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="/developers.html">Developers</a><a href="/research-case-study.html">Case study</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>

@@ -1,0 +1,105 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12"><meta name="description" content="TradeStack developer documentation: Python execution engine, Upstox Node.js gateway, data contracts, local setup, security boundaries, testing and replay."><meta name="robots" content="index,follow"><link rel="canonical" href="https://tradestacks.dev/developers.html"><link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/details.css"><link rel="stylesheet" href="/showcase.css"><link rel="stylesheet" href="/docs.css"><meta property="og:image" content="https://tradestacks.dev/assets/tradestack-logo.webp"><meta property="og:type" content="website"><meta property="og:title" content="Developer Documentation | TradeStack"><meta property="og:description" content="TradeStack developer documentation: Python execution engine, Upstox Node.js gateway, data contracts, local setup, security boundaries, testing and replay."><meta property="og:url" content="https://tradestacks.dev/developers.html"><title>Developer Documentation | TradeStack</title></head><body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async"></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/developers.html" aria-current="page">Developers</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+<main id="main">
+<section class="page-hero docs-hero"><div class="container"><div class="eyebrow"><span class="signal-pulse"></span> TRADESTACK / DEVELOPER DOCUMENTATION</div><h1>Understand the system.<br><em>Build with evidence.</em></h1><p>Source-grounded engineering documentation for the Python market engine and Node.js Upstox gateway. Distinguish the implemented paper workflow from research experiments and future plans.</p><div class="page-pills"><span>PYTHON 3.12</span><span>NODE.JS 22+</span><span>REDIS</span><span>MONGODB</span><span>PARQUET</span><span>PAPER-ONLY</span></div></div></section>
+
+<section class="section docs-section"><div class="container docs-layout">
+<aside class="docs-sidebar" aria-label="Developer page contents">
+<strong>DOCUMENTATION</strong>
+<a href="#overview">System overview</a>
+<a href="#services">Service responsibilities</a>
+<a href="#contracts">Data contracts</a>
+<a href="#operations">Local operations</a>
+<a href="#verification">Tests &amp; replay</a>
+<a href="#security">Security boundary</a>
+<a href="#source-material">Sources &amp; limitations</a>
+</aside>
+<div class="docs-main">
+<section class="docs-chapter" id="overview"><span class="section-overline">01 / SYSTEM OVERVIEW</span><h2>Two services.<br><span>A traceable paper workflow.</span></h2><p>The trading engine ingests live market data and generates rule-based decisions. The gateway authenticates configured Upstox accounts and provides controls, history, and analytics. Redis coordinates ephemeral state and commands; MongoDB stores historical account records; Parquet files hold recorded market events.</p>
+<div class="docs-path">
+<div><span>01</span><strong>Upstox market feed</strong><small>Market ticks, instrument context and available depth</small></div>
+<div><span>02</span><strong>Python analysis and risk engine</strong><small>Candle construction, setups, filters, scoring, positions</small></div>
+<div><span>03</span><strong>Paper execution and journal</strong><small>Simulated orders, lifecycle events, signal/trade records</small></div>
+<div><span>04</span><strong>Node dashboard and research</strong><small>Authenticated controls, MongoDB history, replay tools</small></div>
+</div></section>
+
+<section class="docs-chapter" id="services"><span class="section-overline">02 / CODE ORGANIZATION</span><h2>Where the work happens.</h2>
+<div class="docs-spec"><div><strong>Python · algo-execution-service</strong><p><code>app/main.py</code> FastAPI control API and Redis command publication; <code>app/services/trading_manager.py</code> per-user session orchestration; <code>app/analyzer/</code> indicators, strategy context, market structure and filters; <code>app/services/risk_engine.py</code> Redis-backed capital protection; <code>app/services/trade_lifecycle_manager.py</code> active trade state; <code>app/services/market_data_recorder.py</code> and Parquet modules for capture; <code>scripts/run_session_backtest.py</code> for historical replay.</p></div>
+<div><strong>Node · upstox_api_integration</strong><p><code>routes/router.js</code> authenticated HTTP routes; <code>security/session.js</code> session and account ownership checks; <code>controllers/trading/trading-with-python-backend.js</code> controls and gateway-to-engine requests; <code>controllers/trading/paper-history.js</code> session/trade/signal/analytics queries; <code>public/trading-dashboard.html</code> documented six-module workspace.</p></div>
+<div><strong>Infrastructure</strong><p>Redis manages temporary coordination and risk keys. MongoDB stores durable <code>trades</code>, <code>signals</code> and supporting research/audit data. Date-partitioned local recordings and session manifests support replay; they are not part of this static website.</p></div></div>
+<div class="docs-pointers"><a href="/architecture.html">High-level architecture ↗</a><a href="/trading-engine.html">Trading engine details ↗</a><a href="/dashboard.html">Dashboard walkthrough ↗</a></div></section>
+
+<section class="docs-chapter" id="contracts"><span class="section-overline">03 / DATA CONTRACTS</span><h2>Events you can trace.</h2><p>Field names below come from the documented repository models and query projections. These are examples of structure, not a guarantee that every historical record contains every field.</p>
+<div class="docs-spec"><div><strong>Trade record</strong><p><code>trade_id</code>, <code>session_id</code>, <code>user_id</code>, <code>strategy_version</code>, <code>symbol</code>, <code>trade_type</code>, <code>mode</code>, <code>entry</code>, <code>exit</code>, <code>risk_params</code>, <code>pnl</code>, <code>status</code>.</p></div>
+<div><strong>Signal record</strong><p><code>signal_id</code>, <code>timestamp</code>, <code>session_id</code>, <code>signal_data</code>, <code>analysis</code>, <code>indicators</code>, <code>status</code> and <code>rejection_reason</code>. Link to trades using the recorded entry signal identifier and compatible ID conversion.</p></div>
+<div><strong>Recorded session</strong><p>A manifest can carry <code>session_start</code>, <code>effective_config_snapshot</code>, <code>option_chain_snapshot</code>, <code>decision</code> and <code>session_stop</code>. Recorder metadata indicates completeness and dropped events. Invalid or incomplete sessions must not be assumed replay-valid.</p></div></div>
+<div class="docs-code-label">Example only — synthetic trade shape, no account data</div>
+<pre class="docs-code"><code>{
+  "mode": "PAPER",
+  "strategy_version": "strategy-v2026.10.15",
+  "status": "CLOSED",
+  "entry": {"signal_id": "example-signal"},
+  "exit": {"reason": "STOP_LOSS"},
+  "pnl": {"net_pnl": null}
+}</code></pre>
+<p class="docs-muted">The null amount is intentional: this page never invents a trade result.</p></section>
+
+<section class="docs-chapter" id="operations"><span class="section-overline">04 / DEVELOPMENT SETUP</span><h2>Local development boundaries.</h2><p>These commands are based on each repository's setup guide. You need authorized access to the Python repository, an Upstox developer application, and independently configured MongoDB/Redis services. No secrets or account data are included here.</p>
+<div class="docs-code-label">Python engine · local loopback</div>
+<pre class="docs-code"><code>python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+cp .env.example .env
+# Configure local secrets, MongoDB and Redis in .env
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000</code></pre>
+<div class="docs-code-label">Node.js gateway · separate checkout</div>
+<pre class="docs-code"><code>git clone https://github.com/vishaldkale01/upstox_api_integration.git
+cd upstox_api_integration
+npm ci
+cp .env.example .env
+# Configure APP_ORIGIN, Redis, MongoDB, OAuth and engine token
+npm start</code></pre>
+<div class="note-band">The gateway's <code>ENGINE_API_TOKEN</code> must match the engine, with secrets stored only on the server. Both applications must select the same MongoDB database. Keep service ports private; the Cloudflare Pages marketing website needs neither backend connected.</div></section>
+
+<section class="docs-chapter" id="verification"><span class="section-overline">05 / VERIFY BEFORE CLAIMING</span><h2>Testing isn't the same<br><span>as trading profitability.</span></h2><p>Unit tests, integration checks and deterministic replay serve different purposes. Passing code tests does not establish production uptime, real-money execution readiness, or positive strategy expectancy.</p>
+<div class="docs-code-label">Python unit and research checks</div>
+<pre class="docs-code"><code>python -m pip install -r requirements-dev.txt
+python -m pytest tests/ -v
+python scripts/run_session_backtest.py --help
+python scripts/run_session_backtest.py --list-dates</code></pre>
+<div class="docs-code-label">Node.js gateway and browser smoke checks</div>
+<pre class="docs-code"><code>npm test
+npx playwright install chromium
+npm run test:browser</code></pre>
+<div class="docs-spec"><div><strong>Recorded replay acceptance</strong><p>Confirm session start and stop events, complete recorder metadata, zero dropped events, available warmup/chain context, time-aligned input events and documented fill/fee assumptions. Replay must not silently treat missing context as validated results.</p></div><div><strong>Reporting acceptance</strong><p>Distinguish gross from net P&amp;L, classify exit reasons correctly, show brokerage estimates, disclose sample and session completeness, and explain any mismatch between paper and replay execution.</p></div></div>
+<div class="docs-pointers"><a href="/research-case-study.html">Research case study ↗</a><a href="/research.html">Research standards ↗</a></div></section>
+
+<section class="docs-chapter" id="security"><span class="section-overline">06 / PRIVACY &amp; SAFETY</span><h2>Make the separation explicit.</h2>
+<div class="docs-spec"><div><strong>Marketing website</strong><p>Static Cloudflare Pages content only. It has no broker login, no MongoDB/Redis credentials, no trading API integration, and no public signup or live orders.</p></div>
+<div><strong>Gateway</strong><p>Requires an authenticated account session, server-held broker credentials, CSRF verification and user ownership checks. Public routes for direct live order placement and modification are disabled in the current gateway.</p></div>
+<div><strong>Engine</strong><p>Accepts only authenticated gateway requests via a shared server secret. The documented configuration remains paper-only, with optional AI validation disabled by default.</p></div></div>
+</section>
+
+<section class="docs-chapter" id="source-material"><span class="section-overline">07 / SOURCE &amp; SCOPE</span><h2>What these docs verify.</h2><p>Reviewed source files and README/setup guides from the connected Python engine and Node gateway as of 19 November 2026. The gateway repository is public; the Python engine remains private. This documentation intentionally abstracts private implementation details while describing the module boundaries visible in code.</p><p>Current exceptions: live broker execution is not exposed through the public gateway, research replay has known parity/fidelity limitations, and an optional AI validator is not enabled by default. Public documentation is not an independent security audit or runtime certification.</p>
+<div class="docs-pointers"><a href="https://github.com/vishaldkale01/upstox_api_integration" target="_blank" rel="noopener noreferrer">Public gateway source ↗</a><a href="/contact.html">Community &amp; feedback ↗</a></div></section>
+</div></div></section></main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="#top"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="/#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="/developers.html">Developers</a><a href="/research-case-study.html">Case study</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>

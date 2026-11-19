@@ -1,35 +1,100 @@
-# TradeStack marketing website — static Cloudflare Pages starter
+# TradeStack — Public Website
 
-A simple public-facing website for `tradestacks.dev`. Does not connect to your local execution service, MongoDB, Redis, or Upstox credentials.
+The official static marketing and research website for [tradestacks.dev](https://tradestacks.dev).
 
-## View locally
+**Purpose:** Explain the TradeStack research platform, its paper-trading status, architecture, methodology and roadmap. The website **does not connect to the trading engine, broker, Redis, or MongoDB**. It intentionally displays no live-account or unverified profit claims.
 
-Open `index.html` in a browser, or run:
+## Stack
+
+- Semantic HTML5 and responsive CSS
+- Lightweight vanilla JavaScript (mobile navigation and copyright year)
+- Cloudflare Pages via GitHub integration
+- No Node build process, external dependencies, cookies or tracking scripts
+
+## Run locally
+
+Run from the repository root:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Then visit http://localhost:8080.
+Open <http://localhost:8080>.
 
-## Deploy from GitHub (recommended)
+## Deploy
 
-1. Create a new repository named `tradestacks-website` (public or private).
-2. Upload all files from this directory to the **root of the repository**, not into an additional `tradestacks-site` subdirectory.
-3. Cloudflare > Workers & Pages > Create application > Pages > Connect to Git, and select the repository.
-4. For this pure static HTML site, set Framework preset to `None`, Build command to `exit 0`, and Build output directory to `.`.
-5. Deploy and test the generated `*.pages.dev` URL.
-6. Pages project > Custom domains > Set up a domain > `tradestacks.dev` > Continue.
-7. Cloudflare can manage the required DNS record for the domain because it is already in your Cloudflare account.
+Production is connected to `main` in the Cloudflare Pages project `tradestacks-website`.
 
-## Direct Upload (fastest for a first preview)
+| Setting | Value |
+| --- | --- |
+| Framework preset | None |
+| Production branch | `main` |
+| Build command | Leave blank |
+| Build output directory | `.` |
+| Custom domain | `tradestacks.dev` |
 
-Instead of Git integration you can create a Direct Upload Pages project and drag and drop a ZIP of the assets. IMPORTANT: Pages does not allow converting a Direct Upload project to Git integration later. You would need to create a new Pages project if you later want automatic GitHub deployments.
+Pull requests and other branches can generate preview deployments if enabled in Cloudflare.
 
-## Before making the site public
+## Editorial / security rules
 
-- Review all copy, especially claims about current features and development status.
-- Add your actual contact details or contact page if desired.
-- Confirm the security/legal/privacy material needed for your use case.
-- Avoid exposing broker tokens or endpoints on this static website.
-- GitHub profile link is currently https://github.com/vishaldkale01 (adjust if needed).
+- Paper trading and replay are not real-money performance. Always state execution mode.
+- Do not publish P&L, strategy metrics or simulated outcomes until validated with trading costs, fill assumptions and data-quality checks.
+- Do not publish API keys, tokens, account IDs, broker credentials, production URLs, or personal trading records.
+- Only describe features as available if confirmed in the corresponding service; distinguish experimental, validated and planned.
+- Never expose the local engine, Redis or MongoDB through the static website.
+
+## Current site sections
+
+Hero, platform, approach, research methodology, architecture, roadmap, FAQ and contact/GitHub.
+
+## Design notes
+
+The console illustration is a static conceptual mockup, **not actual market data**. The reported strategy/filter counts reflect the engine README's documented structure, and should be kept in sync as that code changes.
+
+The website source is public. The engine and gateway have separate access and licensing.
+
+## Project sources and public positioning
+
+Website content was reviewed against the `algo-execution-service` Python project (private) and `upstox_api_integration` Node.js/Upstox gateway (public). The website does not expose private repository contents, trading credentials or customer information. Historical replay is implemented but not claimed fully validated. The restricted gateway explicitly disables public live orders.
+
+## Public pages and contact links
+
+- `index.html`: Landing page, services and roadmap
+- `platform.html`: Feature breakdown of the Python engine and Node gateway
+- `architecture.html`: Technical components, state and paper trade data flow
+- `research.html`: Recording, replay, costs and investigation standards
+- `contact.html`: LinkedIn, YouTube and GitHub community links
+
+Official links supplied for this site:
+- LinkedIn: https://www.linkedin.com/in/algodev01/
+- YouTube: https://www.youtube.com/@tradeStack01
+- GitHub website repository: https://github.com/vishaldkale01/tradestacks-website
+
+These links are user-provided/owned project destinations; there is no public email address or subscription form.
+
+## Product showcase phase: Engine & Dashboard
+
+- `trading-engine.html`: Source-grounded market-to-journal flow, strategies, filter/score gates, session risk, trade lifecycle and Parquet replay. Based on the Python engine modules and configuration; not a claim of strategy profitability.
+- `dashboard.html`: Keyboard-accessible static demonstration of the six documented workspace modules (Overview, Configuration, Past Sessions, Trade History, Signals and Analytics). All numerical values use placeholders, no broker credentials or API calls.
+- `showcase.css`: Additional responsive styles for the visual walkthrough and explanatory components.
+
+The interactive dashboard preview is **not a live screenshot or connected account**. Capture carefully sanitized real UI screenshots separately before claiming to demonstrate actual visuals. The production gateway remains restricted to configured accounts, and its direct live-order routes are disabled.
+
+## Developer documentation and research case study (November 2026)
+
+Source-grounded developer documentation is available on the website at `/developers.html` and in versioned Markdown:
+
+- `docs/DEVELOPER_GUIDE.md` — architecture, setup and testing
+- `docs/ARCHITECTURE.md` — service/market-data flow and risk boundaries
+- `docs/DATA_AND_REPLAY.md` — account-scoped history, replay preflight and synthetic order-book VWAP test
+- `docs/RESEARCH_CASE_STUDY_OCT_16.md` — documented October 16 controlled replay comparison, limitations and audit scope
+
+`research-case-study.html` summarizes an internal report from the Python engine: two-trade partial-session replay; **baseline net loss ₹1,459.77 vs immediate-gate net loss ₹491.05**. These are **negative simulated results**, not trading returns. Math was checked, but original private recording was not independently rerun during website publication. Do not advertise this as a verified profitable strategy.
+
+### Brand asset
+
+`assets/tradestack-logo.webp` is an optimized 300px version of the owner-supplied TradeStack artwork (TS monogram / candlestick chart). It appears in navigation, footers and favicons. Do not modify or misrepresent the mark.
+
+### Deployment / public safety
+
+Changes on `design/premium-launch-redesign` are in PR #1 until approved and merged. Merge triggers Cloudflare Pages production deployment to `tradestacks.dev`. The website makes no requests to broker, Redis, MongoDB or the engine. No live-order credentials, account identifiers, recorded ticks or private repository data are shipped.
