@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { post: CollectionEntry<'blog'>; featured?: boolean; }
+const { post, featured = false } = Astro.props;
+const date = post.data.published.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric', timeZone:'UTC' });
+---
+<article class:list={['journal-card', { 'journal-card-featured': featured }]}>
+  <div class="journal-card-meta"><span class="journal-category">{post.data.category}</span><time datetime={post.data.published.toISOString().slice(0,10)}>{date}</time></div>
+  <h2><a href={'/blog/' + post.id + '/'}>{post.data.title}</a></h2>
+  <p>{post.data.description}</p>
+  <div class="journal-card-bottom">
+    <div class="journal-tags">{post.data.tags.slice(0,3).map(tag => <span>{tag}</span>)}</div>
+    <a class="journal-read-link" href={'/blog/' + post.id + '/'} aria-label={'Read ' + post.data.title}>Read article ↗</a>
+  </div>
+</article>

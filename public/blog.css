@@ -1,0 +1,81 @@
+/* TradeStack Journal: shares existing /styles.css brand and navigation */
+.journal-hero{background:radial-gradient(ellipse at 78% 15%,#20594155,transparent 50%),radial-gradient(ellipse at 8% 80%,#17364077,transparent 65%),#080e13;border-bottom:1px solid #2a4b40}
+.journal-hero-inner{padding:105px 0 95px;display:grid;grid-template-columns:1fr .82fr;align-items:center;gap:80px}
+.journal-hero h1{font-size:clamp(52px,6vw,84px);letter-spacing:-5px;line-height:1.04;margin:28px 0}
+.journal-hero h1 em{color:var(--mint);font-style:normal}
+.journal-hero p{color:#a8bbb7;max-width:565px;font-size:17px;line-height:1.85}
+.journal-hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:33px}
+.journal-console{border:1px solid #345c4b;border-radius:17px;background:linear-gradient(142deg,#173128,#0c1b21);padding:33px;box-shadow:0 38px 90px #0005}
+.journal-console-top,.journal-console-bottom{font:10px ui-monospace,monospace;letter-spacing:1.3px;color:#8ab5a2}
+.journal-console-top{display:block;border-bottom:1px solid #365444;padding-bottom:25px}
+.journal-console-line{display:flex;gap:18px;align-items:center;border-bottom:1px solid #28483c;padding:24px 0}
+.journal-console-line span{font:13px ui-monospace,monospace;color:#7ce2ae}
+.journal-console-line strong{font-size:16px;letter-spacing:-.3px}
+.journal-console-bottom{padding-top:26px;color:#abddb6}
+.journal-section{padding-top:92px;padding-bottom:95px}
+.journal-card{border:1px solid #345b48;border-radius:17px;background:linear-gradient(140deg,#11271f,#0d1a22);padding:34px;min-height:300px;display:flex;flex-direction:column;transition:transform .18s,border-color .18s}
+.journal-card:hover{transform:translateY(-3px);border-color:#6abb91}
+.journal-card-featured{padding:47px;min-height:320px;margin:30px 0 21px;position:relative;overflow:hidden}
+.journal-card-featured:after{content:"";position:absolute;width:420px;height:420px;background:radial-gradient(circle,#4e986e22,transparent 68%);right:-150px;top:-150px;pointer-events:none}
+.journal-card-meta{display:flex;justify-content:space-between;align-items:center;gap:15px;color:#94b1a5;font-size:11px;letter-spacing:.4px}
+.journal-category{background:#1c4933;border:1px solid #32744f;border-radius:99px;padding:7px 12px;color:#b4ffd0;font:10px ui-monospace,monospace;letter-spacing:.55px}
+.journal-card h2{font-size:clamp(24px,3vw,33px);line-height:1.23;letter-spacing:-1.1px;margin:27px 0 12px;max-width:740px}
+.journal-card-featured h2{font-size:clamp(33px,4.4vw,48px);line-height:1.12;letter-spacing:-1.7px}
+.journal-card h2 a:hover{color:var(--mint)}
+.journal-card p{font-size:14px;line-height:1.8;color:#a2bcb0;margin:0 0 26px;max-width:700px}
+.journal-card-bottom{margin-top:auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:15px}
+.journal-tags{display:flex;flex-wrap:wrap;gap:7px}
+.journal-tags span,.journal-article-labels span{font:10px ui-monospace,monospace;color:#abcdb8;border:1px solid #385747;border-radius:6px;padding:7px 9px}
+.journal-read-link{font-size:13px;font-weight:750;color:#b1efc6;white-space:nowrap}
+.journal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:21px}
+.journal-topic-bar{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:32px;color:#97c8a8}
+.journal-topic-bar>span:first-child{font:10px ui-monospace,monospace;letter-spacing:1px;margin-right:12px}
+.journal-topic{font-size:11px;border:1px solid #34594b;border-radius:6px;padding:8px 11px;color:#a4c6b4}
+.journal-cta{background:#10251d;border-top:1px solid #2a5040}
+.journal-cta-inner{display:flex;gap:35px;justify-content:space-between;align-items:center}
+.journal-cta h2{font-size:36px;letter-spacing:-1.3px;margin:13px 0}
+.journal-cta p{font-size:14px;color:#a3bfae;max-width:560px;line-height:1.8}
+.journal-cta-buttons{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.journal-article-hero{background:radial-gradient(ellipse at 80% 12%,#23463255,transparent 55%),#091218;border-bottom:1px solid #2b4c40}
+.journal-article-hero-inner{max-width:970px;padding:68px 0 82px}
+.journal-back{font-size:12px;color:#a5dab9;display:inline-block;margin-bottom:55px;font-weight:700}
+.journal-article-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;color:#94b5a4;font-size:12px}
+.journal-article-hero h1{max-width:970px;font-size:clamp(44px,5.7vw,75px);line-height:1.1;letter-spacing:-3px;margin:23px 0 18px}
+.journal-article-hero-inner>p{font-size:18px;line-height:1.8;color:#b0c5b8;max-width:790px}
+.journal-article-labels{display:flex;gap:9px;flex-wrap:wrap;margin-top:27px}
+.journal-reading-section{padding:75px 0 98px}
+.journal-reading-grid{display:grid;grid-template-columns:minmax(0,790px) minmax(160px,260px);gap:80px;align-items:start}
+.journal-prose{min-width:0;font-size:16px;line-height:1.94;color:#c7d8cf}
+.journal-prose> :first-child{margin-top:0}
+.journal-prose h2{font-size:clamp(26px,3.1vw,37px);line-height:1.25;letter-spacing:-1px;color:#f0fff2;margin:53px 0 19px;scroll-margin-top:110px}
+.journal-prose h3{font-size:23px;letter-spacing:-.5px;color:#def5e9;margin:35px 0 13px}
+.journal-prose p,.journal-prose li{color:#b7cfc1}
+.journal-prose p{margin:18px 0}
+.journal-prose ul,.journal-prose ol{padding-left:25px}
+.journal-prose li{padding-left:5px;margin:9px 0}
+.journal-prose strong{color:#e0f4e5}
+.journal-prose a{color:#a8eec4;text-decoration:underline;text-underline-offset:4px}
+.journal-prose blockquote{margin:27px 0;padding:18px 25px;background:#153527;border-left:3px solid #7be3a5;border-radius:0 9px 9px 0}
+.journal-prose blockquote p{margin:0}
+.journal-prose code{font:0.84em/1.6 ui-monospace,monospace;color:#b4efc7;background:#153025;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}
+.journal-prose pre{background:#07181d;border:1px solid #355c4b;border-radius:11px;padding:21px;overflow-x:auto;font:12px/1.7 ui-monospace,monospace}
+.journal-prose pre code{background:none;padding:0;color:#d0f3dc}
+.journal-prose table{display:block;width:100%;overflow-x:auto;border-collapse:collapse;margin:24px 0;font-size:13px}
+.journal-prose th,.journal-prose td{padding:13px 15px;border:1px solid #315a44;min-width:105px}
+.journal-prose th{color:#b4edc4;background:#153225}
+.journal-prose td{color:#cbddd1}
+.journal-prose hr{border:0;border-top:1px solid #2d5040;margin:34px 0}
+.journal-toc{position:sticky;top:118px;border-left:1px solid #2e5741;padding:8px 0 12px 21px;display:flex;flex-direction:column;gap:14px}
+.journal-toc strong{font:10px ui-monospace,monospace;letter-spacing:1px;color:#a2dfba;margin-bottom:10px}
+.journal-toc a{font-size:12px;color:#abc2b4;line-height:1.5}
+.journal-toc a:hover{color:#adf9c2}
+.journal-toc-back{border-top:1px solid #2b4d3d;padding-top:15px;margin-top:15px;color:#b0efc9!important}
+.journal-article-end{margin-top:70px;background:#183429;border:1px solid #396b4d;border-radius:12px;padding:24px}
+.journal-article-end strong{font-size:15px}
+.journal-article-end p{font-size:13px;margin:9px 0 0}
+.journal-next{border-top:1px solid #2e4c3b;background:#11221d;padding:37px 0}
+.journal-next-inner{display:flex;align-items:center;justify-content:space-between;gap:25px}
+.journal-next h2{font-size:25px;letter-spacing:-.7px;margin:12px 0 0}
+@media(max-width:1100px){.journal-hero-inner{gap:35px}.journal-reading-grid{grid-template-columns:minmax(0,1fr) 185px;gap:30px}}
+@media(max-width:750px){.journal-hero-inner{grid-template-columns:1fr;padding:64px 0;gap:35px}.journal-hero h1{font-size:57px;letter-spacing:-3px}.journal-console{padding:23px}.journal-grid{grid-template-columns:1fr}.journal-card-featured{padding:30px}.journal-card h2{font-size:29px}.journal-cta-inner,.journal-next-inner{align-items:flex-start;flex-direction:column}.journal-cta-buttons{width:100%}.journal-reading-grid{grid-template-columns:1fr}.journal-toc{position:static;border-left:0;border-top:1px solid #305b44;padding:25px 0 0;order:-1}.journal-article-hero-inner{padding:55px 0 60px}.journal-article-hero h1{letter-spacing:-2px}.journal-article-meta{gap:9px}.journal-reading-section{padding:45px 0 75px}}
+@media(max-width:440px){.journal-hero h1{font-size:48px}.journal-card{padding:25px}.journal-card-featured h2{font-size:32px}.journal-hero-actions .button{width:100%;justify-content:space-between}}

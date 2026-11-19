@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12">
+<meta name="description" content="TradeStack engineering journal: algorithmic trading system design, recording and replay, paper-trading research and transparently reported experiments."><meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tradestacks.dev/blog/"><link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp">
+<link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/blog.css">
+<link rel="alternate" type="application/rss+xml" title="TradeStack Journal RSS" href="/rss.xml">
+<meta property="og:type" content="website"><meta property="og:title" content="Journal | TradeStack">
+<meta property="og:description" content="TradeStack engineering journal: algorithmic trading system design, recording and replay, paper-trading research and transparently reported experiments."><meta property="og:url" content="https://tradestacks.dev/blog/">
+<meta property="og:image" content="https://tradestacks.dev/assets/tradestack-logo.webp">
+
+<meta name="twitter:card" content="summary"><title>Journal | TradeStack</title></head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async"></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/developers.html">Developers</a>
+        <a href="/blog/" aria-current="page">Journal</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main">
+<section class="journal-hero"><div class="container journal-hero-inner"><div>
+<div class="eyebrow"><span class="signal-pulse" aria-hidden="true"></span> TRADESTACK / ENGINEERING JOURNAL</div>
+<h1>Build openly.<br><em>Study honestly.</em></h1>
+<p>Notes from building and investigating a rule-based, paper-trading research platform. We explain the engineering—and publish the limitations alongside the results.</p>
+<div class="journal-hero-actions"><a class="button button-primary" href="#latest">Read the latest <span aria-hidden="true">↓</span></a><a class="button button-outline" href="/rss.xml">Subscribe via RSS ↗</a></div>
+</div><div class="journal-console" aria-label="Editorial topics, not live trading data">
+<span class="journal-console-top">RESEARCH ENGINEERING / NOTEBOOK</span>
+<div class="journal-console-line"><span>01</span><strong>Markets are data.</strong></div>
+<div class="journal-console-line"><span>02</span><strong>Signals are hypotheses.</strong></div>
+<div class="journal-console-line"><span>03</span><strong>Risk is part of the system.</strong></div>
+<div class="journal-console-line"><span>04</span><strong>Replay tests the story.</strong></div>
+<div class="journal-console-bottom">RESEARCH FIRST · NO PERFORMANCE PROMISES</div></div></div></section>
+<section class="section journal-section" id="latest"><div class="container">
+<div class="section-intro"><div><span class="section-overline">LATEST PUBLISHING</span><h2>From the<br><span>TradeStack Journal.</span></h2></div><p>Technical notes, architecture decisions and research experiments—not broker statements or signals to follow.</p></div>
+<article class="journal-card journal-card-featured"><div class="journal-card-meta"><span class="journal-category">Engineering</span><time datetime="2026-11-19">19 Nov 2026</time></div>
+<h2><a href="/blog/building-a-rule-based-options-research-engine/">Inside TradeStack: Engineering a Rule-Based Options Research Engine</a></h2><p>How TradeStack moves from Upstox market data to strategy decisions, risk checks, simulated positions and auditable research without making profitability promises.</p>
+<div class="journal-card-bottom"><div class="journal-tags"><span>Python</span><span>Signals</span><span>Risk Management</span></div><a class="journal-read-link" href="/blog/building-a-rule-based-options-research-engine/" aria-label="Read Inside TradeStack: Engineering a Rule-Based Options Research Engine">Read article ↗</a></div></article><div class="journal-grid"><article class="journal-card"><div class="journal-card-meta"><span class="journal-category">Architecture</span><time datetime="2026-11-19">19 Nov 2026</time></div>
+<h2><a href="/blog/market-data-replay-with-parquet-and-duckdb/">Recording Market Sessions with DuckDB, Parquet and a Simulation Clock</a></h2><p>How TradeStack approaches tick recording, reproducible session replay, depth-aware fill simulation and the limitations of backtesting fidelity.</p>
+<div class="journal-card-bottom"><div class="journal-tags"><span>DuckDB</span><span>Parquet</span><span>Backtesting</span></div><a class="journal-read-link" href="/blog/market-data-replay-with-parquet-and-duckdb/" aria-label="Read Recording Market Sessions with DuckDB, Parquet and a Simulation Clock">Read article ↗</a></div></article><article class="journal-card"><div class="journal-card-meta"><span class="journal-category">Research</span><time datetime="2026-11-19">19 Nov 2026</time></div>
+<h2><a href="/blog/what-a-smaller-replay-loss-really-means/">A Smaller Replay Loss Is Not Proof of a Profitable Strategy</a></h2><p>TradeStack's October 16 controlled replay compared two entry-quality filters with a baseline. Here is what the reported numbers mean—and what they cannot establish.</p>
+<div class="journal-card-bottom"><div class="journal-tags"><span>Case Study</span><span>Trading Costs</span><span>Experiment Design</span></div><a class="journal-read-link" href="/blog/what-a-smaller-replay-loss-really-means/" aria-label="Read A Smaller Replay Loss Is Not Proof of a Profitable Strategy">Read article ↗</a></div></article></div>
+<div class="journal-topic-bar"><span>TOPICS</span><span class="journal-topic">Engineering</span><span class="journal-topic">Architecture</span><span class="journal-topic">Research</span></div>
+</div></section>
+<section class="section journal-cta"><div class="container journal-cta-inner"><div><span class="section-overline">READ THE EVIDENCE</span><h2>Methods before metrics.</h2><p>Explore the actual architecture, developer documentation and the carefully qualified October replay research case study.</p></div>
+<div class="journal-cta-buttons"><a class="button button-primary" href="/developers.html">Developer documentation ↗</a><a class="button button-outline" href="/research-case-study.html">Research case study →</a></div></div></section></main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="/"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="/developers.html">Developers</a><a href="/blog/">Journal</a><a href="/research-case-study.html">Case study</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>

@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+const featured = posts[0];
+const remaining = posts.slice(1);
+const categories = [...new Set(posts.map(post => post.data.category))];
+---
+<BlogLayout title="Journal" canonicalPath="/blog/" description="TradeStack engineering journal: algorithmic trading system design, recording and replay, paper-trading research and transparently reported experiments.">
+  <section class="journal-hero">
+    <div class="container journal-hero-inner">
+      <div>
+        <div class="eyebrow"><span class="signal-pulse" aria-hidden="true"></span> TRADESTACK / ENGINEERING JOURNAL</div>
+        <h1>Build openly.<br /><em>Study honestly.</em></h1>
+        <p>Notes from building and investigating a rule-based, paper-trading research platform. We explain the engineering—and publish the limitations alongside the results.</p>
+        <div class="journal-hero-actions"><a class="button button-primary" href="#latest">Read the latest <span aria-hidden="true">↓</span></a><a class="button button-outline" href="/rss.xml">Subscribe via RSS ↗</a></div>
+      </div>
+      <div class="journal-console" aria-label="Editorial topics, not live trading data">
+        <span class="journal-console-top">RESEARCH ENGINEERING / NOTEBOOK</span>
+        <div class="journal-console-line"><span>01</span><strong>Markets are data.</strong></div>
+        <div class="journal-console-line"><span>02</span><strong>Signals are hypotheses.</strong></div>
+        <div class="journal-console-line"><span>03</span><strong>Risk is part of the system.</strong></div>
+        <div class="journal-console-line"><span>04</span><strong>Replay tests the story.</strong></div>
+        <div class="journal-console-bottom">RESEARCH FIRST · NO PERFORMANCE PROMISES</div>
+      </div>
+    </div>
+  </section>
+  <section class="section journal-section" id="latest">
+    <div class="container">
+      <div class="section-intro"><div><span class="section-overline">LATEST PUBLISHING</span><h2>From the<br /><span>TradeStack Journal.</span></h2></div><p>Technical notes, architecture decisions and research experiments—not broker statements or signals to follow.</p></div>
+      {featured && <BlogCard post={featured} featured />}
+      {remaining.length > 0 && <div class="journal-grid">{remaining.map(post => <BlogCard post={post} />)}</div>}
+      <div class="journal-topic-bar"><span>TOPICS</span>{categories.map(category => <span class="journal-topic">{category}</span>)}</div>
+    </div>
+  </section>
+  <section class="section journal-cta">
+    <div class="container journal-cta-inner">
+      <div><span class="section-overline">READ THE EVIDENCE</span><h2>Methods before metrics.</h2><p>Explore the actual architecture, developer documentation and the carefully qualified October replay research case study.</p></div>
+      <div class="journal-cta-buttons"><a class="button button-primary" href="/developers.html">Developer documentation ↗</a><a class="button button-outline" href="/research-case-study.html">Research case study →</a></div>
+    </div>
+  </section>
+</BlogLayout>

@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+# Staged originals are generated locally before Astro builds; never commit copies.
+public/index.html
+public/*.html
+public/styles.css
+public/details.css
+public/showcase.css
+public/docs.css
+public/site.js
+public/robots.txt
+public/_headers
+public/sitemap.xml
+public/favicon.svg
+public/assets/

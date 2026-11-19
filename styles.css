@@ -402,3 +402,15 @@ svg {max-width:100%}
 .roadmap-grid-four article{min-height:240px}
 .roadmap-grid-four h3{margin-top:30px}
 @media(max-width:700px){.roadmap-grid-four{grid-template-columns:1fr}.roadmap-grid-four article{min-height:0}}
+
+
+/* TradeStack Journal discovery section; full journal styles live in /blog.css */
+.journal-promo{background:linear-gradient(140deg,#0d1b1c,#0b171c);border-top:1px solid #2a4c3d;border-bottom:1px solid #2a4c3d}
+.journal-promo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.journal-promo-grid article{background:#112821;border:1px solid #37614b;border-radius:14px;padding:27px;display:flex;flex-direction:column;min-height:285px}
+.journal-promo-grid article>span{color:#9be2b4;font:10px ui-monospace,monospace;letter-spacing:1px}
+.journal-promo-grid article h3{font-size:21px;line-height:1.33;letter-spacing:-.5px;margin:23px 0 12px}
+.journal-promo-grid article p{font-size:13px;color:#a5bbaf;line-height:1.75;flex:1}
+.journal-promo-grid article>a:last-child{font-size:12px;font-weight:720;color:#a5edbc;margin-top:16px}
+.journal-promo-cta{margin-top:28px}
+@media(max-width:880px){.journal-promo-grid{grid-template-columns:1fr}.journal-promo-grid article{min-height:0}}

@@ -9,4 +9,8 @@
   <url><loc>https://tradestacks.dev/research-case-study.html</loc></url>
   <url><loc>https://tradestacks.dev/developers.html</loc></url>
   <url><loc>https://tradestacks.dev/contact.html</loc></url>
+  <url><loc>https://tradestacks.dev/blog/</loc></url>
+  <url><loc>https://tradestacks.dev/blog/building-a-rule-based-options-research-engine/</loc></url>
+  <url><loc>https://tradestacks.dev/blog/market-data-replay-with-parquet-and-duckdb/</loc></url>
+  <url><loc>https://tradestacks.dev/blog/what-a-smaller-replay-loss-really-means/</loc></url>
 </urlset>

@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+interface Props { post: CollectionEntry<'blog'>; }
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const published = post.data.published.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
+const sections = headings.filter(heading => heading.depth === 2);
+---
+<BlogLayout title={post.data.title} description={post.data.description} canonicalPath={'/blog/' + post.id + '/'} type="article" published={post.data.published} updated={post.data.updated}>
+  <section class="journal-article-hero">
+    <div class="container journal-article-hero-inner">
+      <a class="journal-back" href="/blog/">← All journal articles</a>
+      <div class="journal-article-meta"><span class="journal-category">{post.data.category}</span><time datetime={post.data.published.toISOString().slice(0,10)}>{published}</time><span>TradeStack Research</span></div>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+      <div class="journal-article-labels">{post.data.tags.map(tag => <span>{tag}</span>)}</div>
+    </div>
+  </section>
+  <section class="journal-reading-section">
+    <div class="container journal-reading-grid">
+      <article class="journal-prose">
+        <Content />
+        <div class="journal-article-end"><strong>Research, not a trade recommendation.</strong><p>TradeStack documents paper-trading engineering and experiments. Performance results are only meaningful with their source, sample, fees, and data limitations.</p></div>
+      </article>
+      <aside class="journal-toc" aria-label="On this page">
+        <strong>ON THIS PAGE</strong>
+        {sections.map(section => <a href={'#' + section.slug}>{section.text}</a>)}
+        <a href="/blog/" class="journal-toc-back">← Journal home</a>
+      </aside>
+    </div>
+  </section>
+  <section class="journal-next"><div class="container journal-next-inner"><div><span class="section-overline">CONTINUE EXPLORING</span><h2>How the system fits together.</h2></div><a class="button button-outline" href="/architecture.html">View the architecture ↗</a></div></section>
+</BlogLayout>

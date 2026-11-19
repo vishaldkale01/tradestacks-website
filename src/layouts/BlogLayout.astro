@@ -1,0 +1,86 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  type?: 'website' | 'article';
+  published?: Date;
+  updated?: Date;
+}
+const { title, description, canonicalPath, type = 'website', published, updated } = Astro.props;
+const site = 'https://tradestacks.dev';
+const canonical = new URL(canonicalPath, site).toString();
+const longTitle = title === 'Journal' ? 'Journal | TradeStack' : title + ' | TradeStack';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#080d12" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/blog.css" />
+  <link rel="alternate" type="application/rss+xml" title="TradeStack Journal RSS" href="/rss.xml" />
+  <meta property="og:type" content={type} />
+  <meta property="og:title" content={longTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={site + '/assets/tradestack-logo.webp'} />
+  {published && <meta property="article:published_time" content={published.toISOString()} />}
+  {updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+  <meta name="twitter:card" content="summary" />
+  <title>{longTitle}</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async" /></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/developers.html">Developers</a>
+        <a href="/blog/" aria-current="page">Journal</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <main id="main">
+    <slot />
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <a class="footer-wordmark" href="/"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="" />trade<span>stack</span><b>.</b></a>
+          <p>Research. Replay. Refine.<br />Independent algo-trading engineering.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a>
+          <a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a>
+          <a href="/research.html">Research</a><a href="/research-case-study.html">Case study</a>
+          <a href="/developers.html">Developers</a><a href="/blog/">Journal</a>
+          <a href="/#roadmap">Roadmap</a><a href="/contact.html">Contact</a>
+          <a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+          <a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+      <p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p>
+      <div class="footer-bottom"><span>© 2026 TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div>
+    </div>
+  </footer>
+  <script is:inline src="/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+name: Astro site checks
+on:
+  push:
+    branches: [main, feature/astro-markdown-blog]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Astro
+        run: npm install --no-audit --no-fund
+      - name: Build and verify all static routes
+        run: npm run build
