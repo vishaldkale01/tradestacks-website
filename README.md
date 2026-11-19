@@ -71,3 +71,11 @@ Official links supplied for this site:
 - GitHub website repository: https://github.com/vishaldkale01/tradestacks-website
 
 These links are user-provided/owned project destinations; there is no public email address or subscription form.
+
+## Product showcase phase: Engine & Dashboard
+
+- `trading-engine.html`: Source-grounded market-to-journal flow, strategies, filter/score gates, session risk, trade lifecycle and Parquet replay. Based on the Python engine modules and configuration; not a claim of strategy profitability.
+- `dashboard.html`: Keyboard-accessible static demonstration of the six documented workspace modules (Overview, Configuration, Past Sessions, Trade History, Signals and Analytics). All numerical values use placeholders, no broker credentials or API calls.
+- `showcase.css`: Additional responsive styles for the visual walkthrough and explanatory components.
+
+The interactive dashboard preview is **not a live screenshot or connected account**. Capture carefully sanitized real UI screenshots separately before claiming to demonstrate actual visuals. The production gateway remains restricted to configured accounts, and its direct live-order routes are disabled.
