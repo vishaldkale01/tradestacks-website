@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12">
+<meta name="description" content="TradeStack's October 16 controlled replay compared two entry-quality filters with a baseline. Here is what the reported numbers mean—and what they cannot establish."><meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tradestacks.dev/blog/what-a-smaller-replay-loss-really-means/"><link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp">
+<link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/blog.css">
+<link rel="alternate" type="application/rss+xml" title="TradeStack Journal RSS" href="/rss.xml">
+<meta property="og:type" content="article"><meta property="og:title" content="A Smaller Replay Loss Is Not Proof of a Profitable Strategy | TradeStack">
+<meta property="og:description" content="TradeStack's October 16 controlled replay compared two entry-quality filters with a baseline. Here is what the reported numbers mean—and what they cannot establish."><meta property="og:url" content="https://tradestacks.dev/blog/what-a-smaller-replay-loss-really-means/">
+<meta property="og:image" content="https://tradestacks.dev/assets/tradestack-logo.webp">
+<meta property="article:published_time" content="2026-11-19T00:00:00.000Z">
+<meta name="twitter:card" content="summary"><title>A Smaller Replay Loss Is Not Proof of a Profitable Strategy | TradeStack</title></head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async"></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/developers.html">Developers</a>
+        <a href="/blog/" aria-current="page">Journal</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main"><section class="journal-article-hero"><div class="container journal-article-hero-inner">
+ <a class="journal-back" href="/blog/">← All journal articles</a>
+ <div class="journal-article-meta"><span class="journal-category">Research</span><time datetime="2026-11-19">19 Nov 2026</time><span>TradeStack Research</span></div>
+ <h1>A Smaller Replay Loss Is Not Proof of a Profitable Strategy</h1><p>TradeStack's October 16 controlled replay compared two entry-quality filters with a baseline. Here is what the reported numbers mean—and what they cannot establish.</p><div class="journal-article-labels"><span>Case Study</span><span>Trading Costs</span><span>Experiment Design</span><span>Replay</span></div>
+ </div></section>
+ <section class="journal-reading-section"><div class="container journal-reading-grid"><article class="journal-prose"><p>A common mistake in systematic trading research is to find an improvement in a backtest and immediately call it an edge.</p>
+<p>Our October 16, 2026 research experiment is a useful counterexample. An additional entry-quality filter improved the *reported* after-cost replay outcome. But the test was a partial session with only two closed trades per variant—and <strong>every variant remained net negative</strong>.</p>
+<p>This article summarizes a private TradeStack research report, not a fresh independent rerun of the market recording.</p>
+<h2 id="what-we-tested">What we tested</h2>
+<p>The report compared the frozen <code>strategy-v2026.10.15</code> pipeline with two optional checks:</p>
+<ul><li><strong>Immediate one-minute quality:</strong> at the decision time, reject a directional candidate when completed one-minute data indicates adverse EMA5/MACD-histogram slope or a two-candle exhaustion/rejection pattern.</li><li><strong>Completed five-minute alignment:</strong> require the last completed five-minute candle to agree with the intended trade direction and EMA21 relationship.</li></ul>
+<p>Both variants used only information available at the original decision timestamp. The experiment patched the research process temporarily; it did not permanently change live or paper strategy configuration.</p>
+<h2 id="what-the-repository-report-recorded">What the repository report recorded</h2>
+<p>The controlled comparison covered <strong>09:15–11:40 IST on October 16</strong>, with <strong>57,579 callback events</strong>, <strong>380 analyzer evaluations</strong>, depth-based fill assumptions, a <strong>100 ms</strong> modeled latency and consistent fee assumptions across variants.</p>
+<div class="journal-table-scroll"><table><thead><tr><th scope="col">Variant</th><th scope="col">Closed trades</th><th scope="col">Win rate</th><th scope="col">Gross P&amp;L</th><th scope="col">Net P&amp;L after costs</th></tr></thead><tbody><tr><td>Existing baseline</td><td>2</td><td>0%</td><td>−₹1,240.50</td><td><strong>−₹1,459.77</strong></td></tr><tr><td>Immediate one-minute quality</td><td>2</td><td>50%</td><td>−₹273.00</td><td><strong>−₹491.05</strong></td></tr><tr><td>Completed five-minute alignment</td><td>2</td><td>0%</td><td>−₹1,240.50</td><td><strong>−₹1,459.77</strong></td></tr></tbody></table></div>
+<p>The improvement in reported net P&amp;L from baseline to the immediate filter is:</p>
+<pre><code>(-491.05)-(-1459.77)=+₹968.72</code></pre>
+<p>The <strong>₹968.72 difference is not profit</strong>. It is a reduction in the magnitude of a simulated loss.</p>
+<p>The arithmetic behind the reported gross/net differences can also be checked: baseline implied costs were ₹219.27, while the one-minute variant implied costs were ₹218.05. Absolute fees remain uncertain because the study noted a mismatch between local and broker estimates.</p>
+<h2 id="why-we-cannot-simply-remove-losing-trades">Why we cannot simply remove losing trades</h2>
+<p>A filtered signal changes the rest of a trading session.</p>
+<p>The research report says the immediate filter rejected replay opportunities around <strong>09:33, 09:58 and 10:56</strong>. Later entries at <strong>09:46 and 11:07</strong> then differed because session state had changed.</p>
+<p>That state includes active positions, post-stop cooldowns, capital availability and drawdown boundaries. Deleting the rejected trades from a spreadsheet would not re-create the counterfactual session.</p>
+<p>This is why the study used an in-process replay variant rather than subtracting historical losses from the trade ledger.</p>
+<h2 id="what-the-five-minute-filter-taught-us">What the five-minute filter taught us</h2>
+<p>The completed five-minute alignment requirement did not improve reported after-cost results in the main window. Early losing trades still occurred.</p>
+<p>More confirmation is not automatically better. The extra time needed to form a completed candle may leave poor entries unchanged while introducing delay to other opportunities.</p>
+<p>The report did <strong>not</strong> recommend promoting this filter.</p>
+<h2 id="limitations-are-part-of-the-result">Limitations are part of the result</h2>
+<p>The study documented several reasons not to convert the observed improvement into a production rule:</p>
+<ol><li>Only <strong>two partial sessions</strong> were usable for cross-session consideration; the main comparison had just <strong>two closed trades per variant</strong>.</li><li>Paper and replay execution did <strong>not</strong> fully match for October 16.</li><li>The replay trade setup field was labeled <code>UNKNOWN</code>, limiting setup-level attribution.</li><li>Local transaction fees did not fully agree with broker estimates.</li><li>An October 9 recording lacked the necessary warmup data and was excluded.</li><li>An October 14 partial-session comparison did not establish a reliable improvement.</li></ol>
+<p>Those are not footnotes. They define how much the experiment can teach us.</p>
+<h2 id="the-research-decision">The research decision</h2>
+<p>The source report concluded that <code>strategy-v2026.10.15</code> should remain unchanged. The one-minute filter should be monitored in <strong>shadow mode</strong> across a larger cohort of complete, replay-valid sessions.</p>
+<p>Before promotion, the system would need to show stable, cost-aware net expectancy, acceptable drawdown, limited rejection of profitable opportunities, meaningful setup/regime coverage and no dependence on a threshold selected to fit this single date.</p>
+<p>That is the practice we want the TradeStack Journal to reflect: <strong>publish the hypothesis, show the evidence, disclose the uncertainty, and keep testing.</strong></p>
+<p>For the detailed figures, methodology and verification scope, read the <a href="/research-case-study.html">October 16 research case study</a>. For the mechanisms behind replay, see our <a href="/developers.html">developer documentation</a>.</p>
+<blockquote><p>Evidence of a smaller loss is evidence that one replay path differed. It is not yet evidence that a trading system has an edge.</p></blockquote>
+ <div class="journal-article-end"><strong>Research, not a trade recommendation.</strong><p>TradeStack documents paper-trading engineering and experiments. Performance results are only meaningful with their source, sample, fees, and data limitations.</p></div></article>
+ <aside class="journal-toc" aria-label="On this page"><strong>ON THIS PAGE</strong><a href="#what-we-tested">What we tested</a><a href="#what-the-repository-report-recorded">What the repository report recorded</a><a href="#why-we-cannot-simply-remove-losing-trades">Why we cannot simply remove losing trades</a><a href="#what-the-five-minute-filter-taught-us">What the five-minute filter taught us</a><a href="#limitations-are-part-of-the-result">Limitations are part of the result</a><a href="#the-research-decision">The research decision</a><a href="/blog/" class="journal-toc-back">← Journal home</a></aside></div></section>
+ <section class="journal-next"><div class="container journal-next-inner"><div><span class="section-overline">CONTINUE EXPLORING</span><h2>How the system fits together.</h2></div><a class="button button-outline" href="/architecture.html">View the architecture ↗</a></div></section></main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="/"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="/developers.html">Developers</a><a href="/blog/">Journal</a><a href="/research-case-study.html">Case study</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>

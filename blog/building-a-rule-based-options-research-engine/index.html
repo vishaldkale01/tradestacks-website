@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12">
+<meta name="description" content="How TradeStack moves from Upstox market data to strategy decisions, risk checks, simulated positions and auditable research without making profitability promises."><meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tradestacks.dev/blog/building-a-rule-based-options-research-engine/"><link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp">
+<link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/blog.css">
+<link rel="alternate" type="application/rss+xml" title="TradeStack Journal RSS" href="/rss.xml">
+<meta property="og:type" content="article"><meta property="og:title" content="Inside TradeStack: Engineering a Rule-Based Options Research Engine | TradeStack">
+<meta property="og:description" content="How TradeStack moves from Upstox market data to strategy decisions, risk checks, simulated positions and auditable research without making profitability promises."><meta property="og:url" content="https://tradestacks.dev/blog/building-a-rule-based-options-research-engine/">
+<meta property="og:image" content="https://tradestacks.dev/assets/tradestack-logo.webp">
+<meta property="article:published_time" content="2026-11-19T00:00:00.000Z">
+<meta name="twitter:card" content="summary"><title>Inside TradeStack: Engineering a Rule-Based Options Research Engine | TradeStack</title></head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async"></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/developers.html">Developers</a>
+        <a href="/blog/" aria-current="page">Journal</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main"><section class="journal-article-hero"><div class="container journal-article-hero-inner">
+ <a class="journal-back" href="/blog/">← All journal articles</a>
+ <div class="journal-article-meta"><span class="journal-category">Engineering</span><time datetime="2026-11-19">19 Nov 2026</time><span>TradeStack Research</span></div>
+ <h1>Inside TradeStack: Engineering a Rule-Based Options Research Engine</h1><p>How TradeStack moves from Upstox market data to strategy decisions, risk checks, simulated positions and auditable research without making profitability promises.</p><div class="journal-article-labels"><span>Python</span><span>Signals</span><span>Risk Management</span><span>Paper Trading</span></div>
+ </div></section>
+ <section class="journal-reading-section"><div class="container journal-reading-grid"><article class="journal-prose"><p>A candidate signal is not a completed trade. That distinction shapes how we design TradeStack, an independent research system for Indian index-options trading.</p>
+<p>Our Python service is built for <strong>paper-mode investigation</strong>. It ingests market data, calculates context, evaluates rule-based strategies, applies independent risk checks, simulates execution and stores a trail that can be reviewed later. The system is not presented here as a proven profitable strategy or an open public brokerage service.</p>
+<h2 id="the-pipeline-begins-with-market-context">The pipeline begins with market context</h2>
+<p>The Python engine consumes an Upstox V3 WebSocket market feed. A user-scoped runtime session processes incoming index and option-market events, builds one-minute candles and maintains the information needed to evaluate setups.</p>
+<p>The analyzer considers multiple types of context:</p>
+<ul><li><strong>Direction:</strong> Dow-style swing structure, VWAP location and moving-average alignment.</li><li><strong>Trend strength:</strong> ADX and higher-timeframe trend checks.</li><li><strong>Momentum and condition:</strong> RSI, MACD, stochastic values and Supertrend.</li><li><strong>Overextension:</strong> ALMA/ATR distance and related filters.</li><li><strong>Execution quality:</strong> available option quotes, spread width and order-book depth.</li></ul>
+<p>These inputs have different roles. A setup may detect an opportunity, while a separate rule determines that it is too extended, too illiquid or inconsistent with the larger trend.</p>
+<h2 id="strategy-classes-propose-hypotheses">Strategy classes propose hypotheses</h2>
+<p>The engine README documents <strong>11 strategy classes</strong> with a larger set of named setups. The code follows a Strategy Pattern: each implementation evaluates a market context and can propose a CALL, a PUT, or no actionable signal.</p>
+<p>Examples include trend pullback/continuation, impulse scalping, VWAP bounce, EMA retest, reversal and breakout patterns.</p>
+<p>One example is a VWAP reaction. It is not enough for price to touch VWAP. The strategy also considers candle structure and higher-timeframe alignment. A proposed direction can be rejected if the five- or fifteen-minute trend contradicts it.</p>
+<p>The architecture is deliberately different from allowing any single indicator to trigger an order.</p>
+<h2 id="filters-and-scores-are-not-probabilities">Filters and scores are not probabilities</h2>
+<p>After candidate generation, additional checks evaluate timing, trend, volatility, exhaustion and other configured conditions. The documented strategy configuration uses a minimum signal score of <strong>7</strong>.</p>
+<p>That value is a rule-based threshold—not a statistically calibrated 70% probability of profit. The score is only meaningful inside its configured rule set and the market sample used to evaluate it.</p>
+<p>We distinguish the following concepts:</p>
+<ol><li>A <strong>candidate</strong> exists when a pattern or strategy condition is met.</li><li>A <strong>validated signal</strong> survives the configured decision gates.</li><li>An <strong>eligible paper order</strong> passes the separate capital, quote and execution constraints.</li><li>A <strong>closed trade</strong> has recorded fills, lifecycle events, charges and an outcome that can be audited.</li></ol>
+<p>There may be many evaluated candidates for every recorded trade. Our research tools should explain those rejected decisions as well as completed positions.</p>
+<h2 id="risk-is-enforced-outside-the-strategy-idea">Risk is enforced outside the strategy idea</h2>
+<p>A positive strategy score does not grant permission to trade.</p>
+<p>The Redis-backed risk engine maintains account-scoped trading state and checks capital drawdown. Documented default controls include a per-trade risk ceiling and a daily loss boundary. The implementation also includes an entry block when an exit price could not be reconciled.</p>
+<p>That is useful engineering, but it is not proof that risk protections always operate correctly. Guard behavior still needs runtime and session-level validation, especially under retries, errors or stale prices.</p>
+<p>Trade management is also stateful. The position lifecycle module tracks protective stop levels, break-even, trailing behavior, profit-lock milestones and exit reasons. An exit label such as <strong>BREAK_EVEN</strong> or <strong>PROFIT_LOCK</strong> must never be treated as evidence of positive net P&amp;L without inspecting actual option fills and charges.</p>
+<h2 id="why-the-research-journal-matters">Why the research journal matters</h2>
+<p>Trades and signals are persisted in MongoDB, while market events can be recorded separately to Parquet with session metadata. We use those records to ask questions after the session:</p>
+<ul><li>Did the entry occur at the expected market timestamp?</li><li>Which rule allowed or rejected the setup?</li><li>Was the option quote fresh and its spread acceptable?</li><li>Did the risk guard change a later decision?</li><li>Was the exit reason consistent with the recorded prices?</li><li>Did estimated brokerage turn a small gross profit into a net loss?</li></ul>
+<p>Those questions are often more useful than adding another indicator.</p>
+<h2 id="what-is-implemented-and-what-is-not">What is implemented, and what is not</h2>
+<p>The Python engine, protected Node.js gateway, rule-based strategies, paper execution, risk components and recording/replay code are <strong>implemented software components</strong>. Their presence is not an independent certification of end-to-end correctness or profitability.</p>
+<p>The current public TradeStack site cannot accept visitor trading sessions. Our <a href="/#roadmap">roadmap</a> proposes a separate, isolated paper-simulation workspace for users much later.</p>
+<p>For a code-oriented explanation, see <a href="/trading-engine.html">Trading Engine</a> and the <a href="/developers.html">Developer Documentation</a>.</p>
+<blockquote><p>TradeStack's purpose is to turn trading decisions into testable engineering questions. That requires keeping failed hypotheses visible, not hiding them.</p></blockquote>
+ <div class="journal-article-end"><strong>Research, not a trade recommendation.</strong><p>TradeStack documents paper-trading engineering and experiments. Performance results are only meaningful with their source, sample, fees, and data limitations.</p></div></article>
+ <aside class="journal-toc" aria-label="On this page"><strong>ON THIS PAGE</strong><a href="#the-pipeline-begins-with-market-context">The pipeline begins with market context</a><a href="#strategy-classes-propose-hypotheses">Strategy classes propose hypotheses</a><a href="#filters-and-scores-are-not-probabilities">Filters and scores are not probabilities</a><a href="#risk-is-enforced-outside-the-strategy-idea">Risk is enforced outside the strategy idea</a><a href="#why-the-research-journal-matters">Why the research journal matters</a><a href="#what-is-implemented-and-what-is-not">What is implemented, and what is not</a><a href="/blog/" class="journal-toc-back">← Journal home</a></aside></div></section>
+ <section class="journal-next"><div class="container journal-next-inner"><div><span class="section-overline">CONTINUE EXPLORING</span><h2>How the system fits together.</h2></div><a class="button button-outline" href="/architecture.html">View the architecture ↗</a></div></section></main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="/"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="/developers.html">Developers</a><a href="/blog/">Journal</a><a href="/research-case-study.html">Case study</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>

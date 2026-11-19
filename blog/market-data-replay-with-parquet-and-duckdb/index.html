@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d12">
+<meta name="description" content="How TradeStack approaches tick recording, reproducible session replay, depth-aware fill simulation and the limitations of backtesting fidelity."><meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tradestacks.dev/blog/market-data-replay-with-parquet-and-duckdb/"><link rel="icon" type="image/webp" href="/assets/tradestack-logo.webp">
+<link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/blog.css">
+<link rel="alternate" type="application/rss+xml" title="TradeStack Journal RSS" href="/rss.xml">
+<meta property="og:type" content="article"><meta property="og:title" content="Recording Market Sessions with DuckDB, Parquet and a Simulation Clock | TradeStack">
+<meta property="og:description" content="How TradeStack approaches tick recording, reproducible session replay, depth-aware fill simulation and the limitations of backtesting fidelity."><meta property="og:url" content="https://tradestacks.dev/blog/market-data-replay-with-parquet-and-duckdb/">
+<meta property="og:image" content="https://tradestacks.dev/assets/tradestack-logo.webp">
+<meta property="article:published_time" content="2026-11-19T00:00:00.000Z">
+<meta name="twitter:card" content="summary"><title>Recording Market Sessions with DuckDB, Parquet and a Simulation Clock | TradeStack</title></head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><img src="/assets/tradestack-logo.webp" width="43" height="43" alt="" decoding="async"></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="/platform.html">Platform</a>
+        <a href="/trading-engine.html">Engine</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/research.html">Research</a>
+        <a href="/developers.html">Developers</a>
+        <a href="/blog/" aria-current="page">Journal</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main"><section class="journal-article-hero"><div class="container journal-article-hero-inner">
+ <a class="journal-back" href="/blog/">← All journal articles</a>
+ <div class="journal-article-meta"><span class="journal-category">Architecture</span><time datetime="2026-11-19">19 Nov 2026</time><span>TradeStack Research</span></div>
+ <h1>Recording Market Sessions with DuckDB, Parquet and a Simulation Clock</h1><p>How TradeStack approaches tick recording, reproducible session replay, depth-aware fill simulation and the limitations of backtesting fidelity.</p><div class="journal-article-labels"><span>DuckDB</span><span>Parquet</span><span>Backtesting</span><span>Python</span></div>
+ </div></section>
+ <section class="journal-reading-section"><div class="container journal-reading-grid"><article class="journal-prose"><p>A historical replay is only as credible as the data and assumptions that produced it.</p>
+<p>A basic backtest may use one-minute candles and assume an order fills at the last traded price. That can be convenient for prototyping, but it hides several things that matter to index-options scalping: quote spreads, market depth, timing, missing feed events and transaction costs.</p>
+<p>TradeStack's research pipeline therefore aims to reproduce <strong>what the engine could have known and done at each event time</strong>, rather than giving its historical strategy access to the future.</p>
+<h2 id="capture-without-blocking-decisions">Capture without blocking decisions</h2>
+<p>The Python market-data service receives Upstox V3 market events and dispatches them to the trading session. In parallel, the recording architecture uses an asynchronous path for capturing diagnostic events and market data.</p>
+<p>The research documentation describes a DuckDB-backed recording workflow that buffers observations and writes compressed Parquet datasets. Parquet stores tabular event data efficiently for scanning and analysis; it is not itself a trading decision engine.</p>
+<p>The important architectural property is separation: disk writes and compaction should not block time-sensitive strategy analysis.</p>
+<p>That claim must be measured under actual session conditions, not assumed merely because code is asynchronous.</p>
+<h2 id="preserve-the-session-not-just-the-prices">Preserve the session, not just the prices</h2>
+<p>A complete session needs more than OHLC or last traded price. The recorder/manifests are designed to preserve contextual artifacts such as:</p>
+<ul><li>Session start and stop boundaries.</li><li>Effective strategy configuration and version.</li><li>Option-chain snapshots and freshness.</li><li>Recorded decisions and selected execution outcomes.</li><li>Metadata about event counts, dropped frames and writer integrity.</li><li>Market timestamps and available order-book depth.</li></ul>
+<p>A replay that has prices but lacks the strategy's warmup state or the historical option-chain context may generate a plausible but incorrect trade sequence.</p>
+<p>The implementation includes a preflight layer that can flag incomplete session artifacts. We should <strong>exclude</strong> incomplete recordings from claims about measured strategy expectancy.</p>
+<h2 id="the-simulation-clock-matters">The simulation clock matters</h2>
+<p>An old bug class in backtesting occurs when a strategy uses today's wall clock while processing an event from last month.</p>
+<p>For example, consider a five-minute post-stop cooldown:</p>
+<ol><li>A simulated stop happens at historical time <strong>09:30</strong>.</li><li>The engine receives a new historical tick at <strong>09:31</strong>.</li><li>The cooldown should still be active.</li><li>At <strong>09:36</strong>, it should have expired.</li></ol>
+<p>This should be calculated using recorded event time, not the computer's current clock.</p>
+<p>TradeStack implements a clock abstraction that supports both a system clock for ongoing sessions and a simulation clock for replay. The repository has isolated tests covering timestamp conversion and event-time progression. Unit tests validate selected behavior; they do not prove all recorded sessions replay identically.</p>
+<h2 id="fill-simulation-is-more-than-using-ltp">Fill simulation is more than using LTP</h2>
+<p>The order-book simulator models a market order sweeping available bid/ask levels, scheduled latency and penalties when requested size exceeds the modeled depth.</p>
+<p>A deliberately synthetic unit-test example in the code uses a buy order of <strong>60 units</strong> against:</p>
+<div class="journal-table-scroll"><table><thead><tr><th scope="col">Ask level</th><th scope="col">Quantity</th><th scope="col">Price</th></tr></thead><tbody><tr><td>1</td><td>20</td><td>₹100.00</td></tr><tr><td>2</td><td>30</td><td>₹101.00</td></tr><tr><td>3</td><td>10 used</td><td>₹102.50</td></tr></tbody></table></div>
+<p>The expected average fill price is:</p>
+<pre><code>(20×100 + 30×101 + 10×102.5) / 60
+= ₹100.9167</code></pre>
+<p>That is a check of an arithmetic model—not an actual Upstox fill.</p>
+<p>The simulator also includes fee estimation. Fees and slippage should be compared against available broker evidence rather than treated as universally accurate assumptions.</p>
+<h2 id="what-a-valid-replay-needs">What a valid replay needs</h2>
+<p>Before using a replay result to change a strategy, our research checklist requires:</p>
+<ul><li>A clearly bounded, sufficiently complete recorded session.</li><li>Consistent event order and timestamps.</li><li>No look-ahead in warmup, indicator formation or option selection.</li><li>Relevant depth, spread and instrument information at the decision time.</li><li>A documented latency and fill model.</li><li>Correct treatment of gross and net P&amp;L.</li><li>Transparent differences between original paper trades and replayed trades.</li></ul>
+<p>The original engine's research documents explicitly say <strong>complete-session replay fidelity remains under validation</strong>. That limitation is not removed by the presence of working tests or a sophisticated simulator.</p>
+<h2 id="the-goal-is-reproducibility-not-impressive-charts">The goal is reproducibility, not impressive charts</h2>
+<p>A powerful replay system can still produce unreliable trading claims if its recorded inputs are incomplete, fills are unrealistic or thresholds are selected on too few sessions.</p>
+<p>For TradeStack, replay is useful when it helps answer a falsifiable question: *Would the decision and outcome have differed, given only the market information available at that time?*</p>
+<p>Read the <a href="/developers.html">replay and data guide</a>, or see our <a href="/research-case-study.html">October replay case study</a> for a concrete example of why these distinctions matter.</p>
+ <div class="journal-article-end"><strong>Research, not a trade recommendation.</strong><p>TradeStack documents paper-trading engineering and experiments. Performance results are only meaningful with their source, sample, fees, and data limitations.</p></div></article>
+ <aside class="journal-toc" aria-label="On this page"><strong>ON THIS PAGE</strong><a href="#capture-without-blocking-decisions">Capture without blocking decisions</a><a href="#preserve-the-session-not-just-the-prices">Preserve the session, not just the prices</a><a href="#the-simulation-clock-matters">The simulation clock matters</a><a href="#fill-simulation-is-more-than-using-ltp">Fill simulation is more than using LTP</a><a href="#what-a-valid-replay-needs">What a valid replay needs</a><a href="#the-goal-is-reproducibility-not-impressive-charts">The goal is reproducibility, not impressive charts</a><a href="/blog/" class="journal-toc-back">← Journal home</a></aside></div></section>
+ <section class="journal-next"><div class="container journal-next-inner"><div><span class="section-overline">CONTINUE EXPLORING</span><h2>How the system fits together.</h2></div><a class="button button-outline" href="/architecture.html">View the architecture ↗</a></div></section></main><footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="/"><img class="footer-logo" src="/assets/tradestack-logo.webp" width="34" height="34" loading="lazy" alt="">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="/platform.html">Platform</a><a href="/trading-engine.html">Engine</a><a href="/dashboard.html">Dashboard</a><a href="/architecture.html">Architecture</a><a href="/research.html">Research</a><a href="#roadmap">Roadmap</a><a href="/contact.html">Contact</a><a href="/developers.html">Developers</a><a href="/blog/">Journal</a><a href="/research-case-study.html">Case study</a><a href="https://www.linkedin.com/in/algodev01/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.youtube.com/@tradeStack01" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
+</body></html>
