@@ -15,7 +15,7 @@ This article summarizes a private TradeStack research report, not a fresh indepe
 
 ## What we tested
 
-The report compared the frozen \`strategy-v2026.10.15\` pipeline with two optional checks:
+The report compared the frozen `strategy-v2026.10.15` pipeline with two optional checks:
 
 - **Immediate one-minute quality:** at the decision time, reject a directional candidate when completed one-minute data indicates adverse EMA5/MACD-histogram slope or a two-candle exhaustion/rejection pattern.
 - **Completed five-minute alignment:** require the last completed five-minute candle to agree with the intended trade direction and EMA21 relationship.
@@ -34,9 +34,11 @@ The controlled comparison covered **09:15–11:40 IST on October 16**, with **57
 
 The improvement in reported net P&L from baseline to the immediate filter is:
 
-\[
+
+```
 (-491.05)-(-1459.77)=+₹968.72
-\]
+```
+
 
 The **₹968.72 difference is not profit**. It is a reduction in the magnitude of a simulated loss.
 
@@ -66,7 +68,7 @@ The study documented several reasons not to convert the observed improvement int
 
 1. Only **two partial sessions** were usable for cross-session consideration; the main comparison had just **two closed trades per variant**.
 2. Paper and replay execution did **not** fully match for October 16.
-3. The replay trade setup field was labeled \`UNKNOWN\`, limiting setup-level attribution.
+3. The replay trade setup field was labeled `UNKNOWN`, limiting setup-level attribution.
 4. Local transaction fees did not fully agree with broker estimates.
 5. An October 9 recording lacked the necessary warmup data and was excluded.
 6. An October 14 partial-session comparison did not establish a reliable improvement.
@@ -75,7 +77,7 @@ Those are not footnotes. They define how much the experiment can teach us.
 
 ## The research decision
 
-The source report concluded that \`strategy-v2026.10.15\` should remain unchanged. The one-minute filter should be monitored in **shadow mode** across a larger cohort of complete, replay-valid sessions.
+The source report concluded that `strategy-v2026.10.15` should remain unchanged. The one-minute filter should be monitored in **shadow mode** across a larger cohort of complete, replay-valid sessions.
 
 Before promotion, the system would need to show stable, cost-aware net expectancy, acceptable drawdown, limited rejection of profitable opportunities, meaningful setup/regime coverage and no dependence on a threshold selected to fit this single date.
 
