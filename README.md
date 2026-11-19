@@ -98,3 +98,10 @@ Source-grounded developer documentation is available on the website at `/develop
 ### Deployment / public safety
 
 Changes on `design/premium-launch-redesign` are in PR #1 until approved and merged. Merge triggers Cloudflare Pages production deployment to `tradestacks.dev`. The website makes no requests to broker, Redis, MongoDB or the engine. No live-order credentials, account identifiers, recorded ticks or private repository data are shipped.
+
+## Product roadmap: single account now, multi-user research later
+
+- **Current:** one authorized Upstox research account, behind private gateway authentication, for paper trading and recording. No visitor access to session controls.
+- **Validation:** reconcile trade accounting, exit attribution and replay fidelity before public performance reporting.
+- **Next (planned, not deployed):** sanitized read-only public activity/research summaries from the one authorized account. No raw exchange feed redistribution, account identifiers, tokens, or internal logs.
+- **Future (exploratory):** allow registered users to connect their own supported brokerage accounts for **independent paper simulations only**. Requirements include user/session/recording isolation, separate risk and capital limits, authentication, abuse controls, regulatory/licensing review and no shared access to the owner's account. This is a direction, **not** a release date or a live-order product commitment.
