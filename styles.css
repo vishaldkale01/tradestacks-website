@@ -388,3 +388,11 @@ svg {max-width:100%}
   .case-mini article{padding:12px}
   .case-mini article strong{font-size:20px}
 }
+
+
+.research-feature-banner{border-bottom:1px solid #345346;background:linear-gradient(115deg,#16362b,#10231c);padding:35px 0}
+.research-feature-inner{display:flex;justify-content:space-between;align-items:center;gap:28px}
+.research-feature-inner h2{font-size:clamp(23px,2.5vw,34px);letter-spacing:-.8px;margin:12px 0 8px}
+.research-feature-inner p{color:#a1c2ad;font-size:13px;margin:0;line-height:1.7}
+.research-feature-inner .button{white-space:nowrap}
+@media(max-width:700px){.research-feature-inner{flex-direction:column;align-items:flex-start}.research-feature-inner .button{width:100%;justify-content:space-between}}
