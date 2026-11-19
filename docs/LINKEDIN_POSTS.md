@@ -2,11 +2,27 @@
 
 The public journal at \`/blog/\` includes a curated “From LinkedIn” section. It is **not** connected to the LinkedIn API or a live feed, and does not require a backend.
 
-## Why the list starts empty
+## Initial user-provided LinkedIn link
 
-The website owner's profile is https://www.linkedin.com/in/algodev01/. We could not reliably verify the individual public posts and images via external search. The section **must not invent posts or copy unrelated accounts' work**. The empty state links to the owner's profile.
+The owner supplied the following direct LinkedIn URL for inclusion:
 
-## Adding a verified LinkedIn post or article
+`https://www.linkedin.com/feed/update/urn:li:activity:7527071619664654336/`
+
+We could not retrieve the content, date or image from that specific update. It is therefore recorded as a **link-only** card and explicitly marked as not yet content-verified. We do not invent a title, publication date, media or performance claim. This is not a live LinkedIn feed. To turn it into a full card, review the post while signed in and provide the exact caption/date and any image approved for republication.
+
+## Adding a LinkedIn post or article
+
+If only a post URL is available, a minimal entry is valid:
+
+```json
+[
+  { "type": "post", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7527071619664654336/" }
+]
+```
+
+For a fully described post, use verified fields and optional image details as below.
+
+### Fully described post example
 
 Edit \`src/data/linkedin-posts.json\`. An entry looks like:
 
@@ -49,4 +65,4 @@ The same image appears in article listings, the article header and social-sharin
 4. Run \`npm run build\` and review the Cloudflare PR preview.
 5. Merge only after checking the image sizes, mobile layout, outbound links and accessibility.
 
-No real LinkedIn content is stored in the initial JSON file. Submit direct LinkedIn post URLs or a LinkedIn export with media files if you want these curated cards to be populated.
+A single owner-supplied URL is currently stored without an unverified title, date or image. Submit the original post caption, date and a screenshot or owned image to complete its card.
