@@ -15,23 +15,23 @@ The official static marketing and research website for [tradestacks.dev](https:/
 
 Run from the repository root:
 
-\`\`\`bash
+```bash
 python3 -m http.server 8080
-\`\`\`
+```
 
 Open <http://localhost:8080>.
 
 ## Deploy
 
-Production is connected to \`main\` in the Cloudflare Pages project \`tradestacks-website\`.
+Production is connected to `main` in the Cloudflare Pages project `tradestacks-website`.
 
 | Setting | Value |
 | --- | --- |
 | Framework preset | None |
-| Production branch | \`main\` |
+| Production branch | `main` |
 | Build command | Leave blank |
-| Build output directory | \`.\` |
-| Custom domain | \`tradestacks.dev\` |
+| Build output directory | `.` |
+| Custom domain | `tradestacks.dev` |
 
 Pull requests and other branches can generate preview deployments if enabled in Cloudflare.
 
