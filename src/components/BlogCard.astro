@@ -5,6 +5,7 @@ const { post, featured = false } = Astro.props;
 const date = post.data.published.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric', timeZone:'UTC' });
 ---
 <article class:list={['journal-card', { 'journal-card-featured': featured }]}>
+  {post.data.coverImage && post.data.coverAlt && <a class="journal-card-visual" href={'/blog/' + post.id + '/'} aria-label={'Read ' + post.data.title}><img src={post.data.coverImage} alt={post.data.coverAlt} loading="lazy" decoding="async" width="960" height="540" /></a>}
   <div class="journal-card-meta"><span class="journal-category">{post.data.category}</span><time datetime={post.data.published.toISOString().slice(0,10)}>{date}</time></div>
   <h2><a href={'/blog/' + post.id + '/'}>{post.data.title}</a></h2>
   <p>{post.data.description}</p>

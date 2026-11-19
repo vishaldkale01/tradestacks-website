@@ -4,10 +4,11 @@ interface Props {
   description: string;
   canonicalPath: string;
   type?: 'website' | 'article';
+  image?: string;
   published?: Date;
   updated?: Date;
 }
-const { title, description, canonicalPath, type = 'website', published, updated } = Astro.props;
+const { title, description, canonicalPath, type = 'website', image, published, updated } = Astro.props;
 const site = 'https://tradestacks.dev';
 const canonical = new URL(canonicalPath, site).toString();
 const longTitle = title === 'Journal' ? 'Journal | TradeStack' : title + ' | TradeStack';
@@ -29,7 +30,7 @@ const longTitle = title === 'Journal' ? 'Journal | TradeStack' : title + ' | Tra
   <meta property="og:title" content={longTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
-  <meta property="og:image" content={site + '/assets/tradestack-logo.webp'} />
+  <meta property="og:image" content={new URL(image || '/assets/tradestack-logo.webp',site).toString()} />
   {published && <meta property="article:published_time" content={published.toISOString()} />}
   {updated && <meta property="article:modified_time" content={updated.toISOString()} />}
   <meta name="twitter:card" content="summary" />

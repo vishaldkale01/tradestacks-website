@@ -67,3 +67,29 @@ Cloudflare Pages Astro static builds use \`npm run build\` and publish \`dist\`,
 ## Live research monitor remains separate
 
 Astro renders static blog posts at build time. A future read-only monitor can use separately authenticated/sanitized endpoints (e.g. Cloudflare Workers), without adding browser access to the private engine, Redis, MongoDB or broker tokens. Multi-user paper simulation remains a future roadmap item.
+
+
+## Article images
+
+To add an image to a new Astro Markdown article, place an owned or licensed `.webp`, `.avif`, `.png` or `.jpg` file in `public/images/blog/`, then specify both fields in the Markdown frontmatter:
+
+```yaml
+coverImage: "/images/blog/risk-pipeline.webp"
+coverAlt: "Diagram of the TradeStack paper-trading risk validation pipeline"
+```
+
+Astro uses this image in the article card, article header and social-sharing metadata. To add an image within an article, use Markdown:
+
+```markdown
+![Description of the chart or diagram](/images/blog/risk-pipeline.webp)
+```
+
+Prefer a 16:9 ratio for article covers. Resize large screenshots and remove tokens, account identifiers and private logs before publishing. Images without both `coverImage` and `coverAlt` do not display a cover. Do not use temporary LinkedIn CDN URLs, which can expire.
+
+## Curated LinkedIn block
+
+The blog includes a read-only “From LinkedIn” block. Entries are stored as explicit, approved records in `src/data/linkedin-posts.json`, not obtained through scraping or a live API. It currently contains one owner-supplied LinkedIn permalink, displayed as a link-only card because its caption, date and media have not been independently verified.
+
+See [`LINKEDIN_POSTS.md`](LINKEDIN_POSTS.md) for how to add a verified LinkedIn post or article and its optional image. Every card links to its original LinkedIn URL. A link-only card is supported when a caption, date or image cannot be confirmed; in that case the page displays an explicit verification note instead of inventing metadata.
+
+Do not create made-up social posts, engagement figures, or assumed publication dates.

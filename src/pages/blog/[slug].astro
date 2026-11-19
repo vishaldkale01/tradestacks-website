@@ -12,13 +12,14 @@ const { Content, headings } = await render(post);
 const published = post.data.published.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
 const sections = headings.filter(heading => heading.depth === 2);
 ---
-<BlogLayout title={post.data.title} description={post.data.description} canonicalPath={'/blog/' + post.id + '/'} type="article" published={post.data.published} updated={post.data.updated}>
+<BlogLayout title={post.data.title} description={post.data.description} canonicalPath={'/blog/' + post.id + '/'} type="article" image={post.data.coverImage} published={post.data.published} updated={post.data.updated}>
   <section class="journal-article-hero">
     <div class="container journal-article-hero-inner">
       <a class="journal-back" href="/blog/">← All journal articles</a>
       <div class="journal-article-meta"><span class="journal-category">{post.data.category}</span><time datetime={post.data.published.toISOString().slice(0,10)}>{published}</time><span>TradeStack Research</span></div>
       <h1>{post.data.title}</h1>
       <p>{post.data.description}</p>
+      {post.data.coverImage && post.data.coverAlt && <figure class="journal-article-cover"><img src={post.data.coverImage} alt={post.data.coverAlt} width="1200" height="675" decoding="async" /></figure>}
       <div class="journal-article-labels">{post.data.tags.map(tag => <span>{tag}</span>)}</div>
     </div>
   </section>

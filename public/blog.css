@@ -79,3 +79,33 @@
 @media(max-width:1100px){.journal-hero-inner{gap:35px}.journal-reading-grid{grid-template-columns:minmax(0,1fr) 185px;gap:30px}}
 @media(max-width:750px){.journal-hero-inner{grid-template-columns:1fr;padding:64px 0;gap:35px}.journal-hero h1{font-size:57px;letter-spacing:-3px}.journal-console{padding:23px}.journal-grid{grid-template-columns:1fr}.journal-card-featured{padding:30px}.journal-card h2{font-size:29px}.journal-cta-inner,.journal-next-inner{align-items:flex-start;flex-direction:column}.journal-cta-buttons{width:100%}.journal-reading-grid{grid-template-columns:1fr}.journal-toc{position:static;border-left:0;border-top:1px solid #305b44;padding:25px 0 0;order:-1}.journal-article-hero-inner{padding:55px 0 60px}.journal-article-hero h1{letter-spacing:-2px}.journal-article-meta{gap:9px}.journal-reading-section{padding:45px 0 75px}}
 @media(max-width:440px){.journal-hero h1{font-size:48px}.journal-card{padding:25px}.journal-card-featured h2{font-size:32px}.journal-hero-actions .button{width:100%;justify-content:space-between}}
+
+
+/* Optional image support for authored Markdown articles and verified LinkedIn cards */
+.journal-card-visual{display:block;overflow:hidden;border-radius:12px;margin:-9px -9px 26px;aspect-ratio:16/9;background:#0d2a23;border:1px solid #345745}
+.journal-card-visual img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.journal-card-visual:hover img{transform:scale(1.025)}
+.journal-card-featured .journal-card-visual{max-height:355px}
+.journal-article-cover{margin:30px 0 3px;border-radius:15px;overflow:hidden;border:1px solid #416351;background:#132923}
+.journal-article-cover img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.journal-prose img{max-width:100%;height:auto;border-radius:12px;border:1px solid #426351;display:block;margin:22px auto}
+.linkedin-section{border-top:1px solid #355646;background:radial-gradient(ellipse at 84% 15%,#1e60433a,transparent 49%),#0a1719}
+.linkedin-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}
+.linkedin-head h2{font-size:clamp(31px,3.4vw,45px);letter-spacing:-1.7px;line-height:1.2;margin:15px 0 11px}
+.linkedin-head p{max-width:660px;font-size:14px;color:#b0c5b9;line-height:1.8;margin:0}
+.linkedin-profile-btn{display:inline-flex;align-items:center;white-space:nowrap;gap:12px;padding:11px 16px;border-radius:9px;border:1px solid #55806b;color:#afe6c8;font-size:12px;font-weight:720}
+.linkedin-feed{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.linkedin-card{display:flex;flex-direction:column;overflow:hidden;border-radius:14px;background:#112a22;border:1px solid #3d644f;min-width:0}
+.linkedin-card-media{aspect-ratio:16/10;background:#0a191c;overflow:hidden}
+.linkedin-card-media img{display:block;width:100%;height:100%;object-fit:cover}
+.linkedin-card-body{padding:24px;flex:1;display:flex;flex-direction:column}
+.linkedin-card-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;font:10px ui-monospace,monospace;color:#a7c6b5}
+.linkedin-card-meta span{color:#abf1c6}
+.linkedin-card h3{font-size:19px;line-height:1.34;letter-spacing:-.5px;margin:0 0 13px}
+.linkedin-card p{font-size:13px;line-height:1.8;color:#afc7b7;margin:0 0 20px;flex:1}
+.linkedin-card-link{font-size:12px;color:#b5f8ce;font-weight:720}
+.linkedin-intro{border:1px solid #3b6750;background:linear-gradient(135deg,#122d23,#111e26);border-radius:15px;padding:30px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+.linkedin-intro strong{display:block;font-size:18px;margin-bottom:7px}
+.linkedin-intro p{font-size:13px;line-height:1.75;color:#b3c7ba;max-width:670px;margin:0}
+@media(max-width:900px){.linkedin-feed{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.linkedin-head{flex-direction:column;align-items:flex-start}.linkedin-feed{grid-template-columns:1fr}.linkedin-intro{flex-direction:column;align-items:flex-start}.journal-card-visual{margin:-2px -2px 20px}.journal-card-featured .journal-card-visual{max-height:260px}}
