@@ -105,3 +105,15 @@ Changes on `design/premium-launch-redesign` are in PR #1 until approved and merg
 - **Validation:** reconcile trade accounting, exit attribution and replay fidelity before public performance reporting.
 - **Next (planned, not deployed):** sanitized read-only public activity/research summaries from the one authorized account. No raw exchange feed redistribution, account identifiers, tokens, or internal logs.
 - **Future (exploratory):** allow registered users to connect their own supported brokerage accounts for **independent paper simulations only**. Requirements include user/session/recording isolation, separate risk and capital limits, authentication, abuse controls, regulatory/licensing review and no shared access to the owner's account. This is a direction, **not** a release date or a live-order product commitment.
+
+## Astro + Markdown engineering journal
+
+This version adds a statically generated journal at `/blog/` using Astro 6 and Markdown content collections.
+
+- All nine existing HTML routes remain byte-identical in Astro's output; `scripts/stage-legacy.mjs` copies an explicit allowlist of root files into `public/` before each build.
+- Three source-grounded articles live in `src/content/blog/`.
+- A shared Astro layout reuses the TradeStack logo, nav, footer and original stylesheet.
+- Articles generate `/rss.xml` and are included in the build-generated sitemap.
+- `npm run build` outputs `dist/` and runs static verification.
+
+See [Blog Publishing and Cloudflare migration](docs/BLOG_PUBLISHING.md). **Merging code does not change Cloudflare's current build settings**: after review/merge, switch Pages to `npm run build`, output `dist`, Node 22.12+ and redeploy. The public site continues to be independent of the private trading engine.
