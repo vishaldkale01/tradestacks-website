@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import BlogCard from '../../components/BlogCard.astro';
+import LinkedInPosts from '../../components/LinkedInPosts.astro';
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
 const featured = posts[0];
@@ -35,6 +36,7 @@ const categories = [...new Set(posts.map(post => post.data.category))];
       <div class="journal-topic-bar"><span>TOPICS</span>{categories.map(category => <span class="journal-topic">{category}</span>)}</div>
     </div>
   </section>
+  <LinkedInPosts />
   <section class="section journal-cta">
     <div class="container journal-cta-inner">
       <div><span class="section-overline">READ THE EVIDENCE</span><h2>Methods before metrics.</h2><p>Explore the actual architecture, developer documentation and the carefully qualified October replay research case study.</p></div>
