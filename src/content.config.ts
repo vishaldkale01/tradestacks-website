@@ -9,6 +9,8 @@ const blog = defineCollection({
     updated: z.coerce.date().optional(),
     category: z.enum(['Engineering', 'Research', 'Architecture', 'Project Updates']),
     tags: z.array(z.string()).default([]),
+    coverImage: z.string().regex(/^\/images\/blog\/[a-z0-9/_-]+\.(?:avif|webp|png|jpe?g)$/).optional(),
+    coverAlt: z.string().min(8).max(180).optional(),
     draft: z.boolean().default(false)
   })
 });
