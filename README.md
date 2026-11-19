@@ -79,3 +79,22 @@ These links are user-provided/owned project destinations; there is no public ema
 - `showcase.css`: Additional responsive styles for the visual walkthrough and explanatory components.
 
 The interactive dashboard preview is **not a live screenshot or connected account**. Capture carefully sanitized real UI screenshots separately before claiming to demonstrate actual visuals. The production gateway remains restricted to configured accounts, and its direct live-order routes are disabled.
+
+## Developer documentation and research case study (November 2026)
+
+Source-grounded developer documentation is available on the website at `/developers.html` and in versioned Markdown:
+
+- `docs/DEVELOPER_GUIDE.md` — architecture, setup and testing
+- `docs/ARCHITECTURE.md` — service/market-data flow and risk boundaries
+- `docs/DATA_AND_REPLAY.md` — account-scoped history, replay preflight and synthetic order-book VWAP test
+- `docs/RESEARCH_CASE_STUDY_OCT_16.md` — documented October 16 controlled replay comparison, limitations and audit scope
+
+`research-case-study.html` summarizes an internal report from the Python engine: two-trade partial-session replay; **baseline net loss ₹1,459.77 vs immediate-gate net loss ₹491.05**. These are **negative simulated results**, not trading returns. Math was checked, but original private recording was not independently rerun during website publication. Do not advertise this as a verified profitable strategy.
+
+### Brand asset
+
+`assets/tradestack-logo.webp` is an optimized 300px version of the owner-supplied TradeStack artwork (TS monogram / candlestick chart). It appears in navigation, footers and favicons. Do not modify or misrepresent the mark.
+
+### Deployment / public safety
+
+Changes on `design/premium-launch-redesign` are in PR #1 until approved and merged. Merge triggers Cloudflare Pages production deployment to `tradestacks.dev`. The website makes no requests to broker, Redis, MongoDB or the engine. No live-order credentials, account identifiers, recorded ticks or private repository data are shipped.
