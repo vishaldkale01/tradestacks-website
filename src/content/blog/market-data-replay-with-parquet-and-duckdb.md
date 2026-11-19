@@ -67,10 +67,12 @@ A deliberately synthetic unit-test example in the code uses a buy order of **60 
 
 The expected average fill price is:
 
-\[
-\frac{20(100)+30(101)+10(102.5)}{60}
+
+```
+(20×100 + 30×101 + 10×102.5) / 60
 = ₹100.9167
-\]
+```
+
 
 That is a check of an arithmetic model—not an actual Upstox fill.
 
