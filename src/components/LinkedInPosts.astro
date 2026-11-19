@@ -1,0 +1,80 @@
+---
+import items from '../data/linkedin-posts.json';
+
+type LinkedInEntry = {
+  title: string;
+  summary: string;
+  date: string;
+  url: string;
+  type: 'post' | 'article';
+  image?: string;
+  imageAlt?: string;
+};
+
+const profileUrl = 'https://www.linkedin.com/in/algodev01/';
+const isVerifiedUrl = (url: string) => {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:' &&
+      ['linkedin.com', 'www.linkedin.com'].includes(parsed.hostname) &&
+      (/^\/posts\//.test(parsed.pathname) || /^\/pulse\//.test(parsed.pathname) ||
+       /^\/feed\/update\//.test(parsed.pathname));
+  } catch {
+    return false;
+  }
+};
+const allowedImage = (item: LinkedInEntry) =>
+  typeof item.image === 'string' && /^\/images\/blog\/[a-z0-9/_-]+\.(?:avif|webp|png|jpe?g)$/.test(item.image) &&
+  typeof item.imageAlt === 'string' && item.imageAlt.length >= 8;
+const posts: LinkedInEntry[] = (items as LinkedInEntry[])
+  .filter(item => ['post', 'article'].includes(item.type) &&
+    typeof item.title === 'string' && item.title.trim().length >= 10 &&
+    typeof item.summary === 'string' && item.summary.trim().length >= 20 &&
+    /^\d{4}-\d{2}-\d{2}$/.test(item.date) && !Number.isNaN(Date.parse(item.date)) &&
+    isVerifiedUrl(item.url))
+  .sort((a,b) => b.date.localeCompare(a.date));
+const dateLabel = (date: string) => new Date(date + 'T00:00:00Z')
+  .toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+<section class="section linkedin-section" id="from-linkedin">
+  <div class="container">
+    <div class="linkedin-head">
+      <div>
+        <span class="section-overline">BEYOND THE JOURNAL</span>
+        <h2>From LinkedIn.<br />Into the conversation.</h2>
+        <p>Our selected engineering updates, research notes and articles, linked back to their original publications. This section is curated—not a live LinkedIn feed.</p>
+      </div>
+      <a class="linkedin-profile-btn" href={profileUrl} target="_blank" rel="noopener noreferrer">View LinkedIn profile ↗</a>
+    </div>
+    {posts.length > 0 ? (
+      <div class="linkedin-feed">
+        {posts.map(post => (
+          <article class="linkedin-card">
+            {allowedImage(post) && (
+              <a class="linkedin-card-media" href={post.url} target="_blank" rel="noopener noreferrer" aria-label={'Open the original LinkedIn ' + post.type + ': ' + post.title}>
+                <img src={post.image} alt={post.imageAlt} loading="lazy" decoding="async" width="1000" height="625" />
+              </a>
+            )}
+            <div class="linkedin-card-body">
+              <div class="linkedin-card-meta">
+                <span>{post.type === 'article' ? 'LINKEDIN ARTICLE' : 'LINKEDIN POST'}</span>
+                <time datetime={post.date}>{dateLabel(post.date)}</time>
+              </div>
+              <h3><a href={post.url} target="_blank" rel="noopener noreferrer">{post.title}</a></h3>
+              <p>{post.summary}</p>
+              <a class="linkedin-card-link" href={post.url} target="_blank" rel="noopener noreferrer">Read on LinkedIn ↗</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="linkedin-intro">
+        <div>
+          <strong>Follow our engineering updates.</strong>
+          <p>Verified LinkedIn posts will appear here once their original links and images have been reviewed. Until then, follow the profile directly—no invented posts or placeholder engagement statistics.</p>
+        </div>
+        <a class="button button-outline" href={profileUrl} target="_blank" rel="noopener noreferrer">Explore LinkedIn ↗</a>
+      </div>
+    )}
+  </div>
+</section>
