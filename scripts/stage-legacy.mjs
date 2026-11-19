@@ -22,11 +22,15 @@ await cp(path.join(root, 'assets'), path.join(publicDir, 'assets'), { recursive:
 await copyFile(path.join(root, 'favicon.svg'), path.join(publicDir, 'favicon.svg'));
 
 const posts = (await readdir(path.join(root, 'src/content/blog')))
-  .filter(name => name.endsWith('.md'))
-  .filter(Boolean);
+  .filter(name => name.endsWith('.md'));
+const published = [];
+for (const name of posts) {
+  const source = await readFile(path.join(root, 'src/content/blog', name), 'utf8');
+  if (!/^draft:\\s*true\\s*$/m.test(source.split('---', 3)[1] || '')) published.push(name);
+}
 const sitePaths = [
   '/', ...legacyFiles.filter(name => name.endsWith('.html') && name !== 'index.html').map(name => '/' + name),
-  '/blog/', ...posts.map(name => '/blog/' + name.slice(0, -3) + '/')
+  '/blog/', ...published.map(name => '/blog/' + name.slice(0, -3) + '/')
 ];
 const escapeXml = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const sitemap = [
@@ -36,4 +40,4 @@ const sitemap = [
   '</urlset>', ''
 ].join('\n');
 await writeFile(path.join(publicDir, 'sitemap.xml'), sitemap, 'utf8');
-console.log('Staged ' + legacyFiles.length + ' preserved website files and ' + posts.length + ' Markdown article routes.');
+console.log('Staged ' + legacyFiles.length + ' preserved website files and ' + published.length + ' published Markdown article routes.');
