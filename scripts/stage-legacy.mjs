@@ -26,7 +26,7 @@ const posts = (await readdir(path.join(root, 'src/content/blog')))
 const published = [];
 for (const name of posts) {
   const source = await readFile(path.join(root, 'src/content/blog', name), 'utf8');
-  if (!/^draft:\\s*true\\s*$/m.test(source.split('---', 3)[1] || '')) published.push(name);
+  if (!/^draft:\s*true\s*$/m.test(source.split('---', 3)[1] || '')) published.push(name);
 }
 const sitePaths = [
   '/', ...legacyFiles.filter(name => name.endsWith('.html') && name !== 'index.html').map(name => '/' + name),
