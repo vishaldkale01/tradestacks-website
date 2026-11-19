@@ -1,35 +1,54 @@
-# TradeStack marketing website — static Cloudflare Pages starter
+# TradeStack — Public Website
 
-A simple public-facing website for `tradestacks.dev`. Does not connect to your local execution service, MongoDB, Redis, or Upstox credentials.
+The official static marketing and research website for [tradestacks.dev](https://tradestacks.dev).
 
-## View locally
+**Purpose:** Explain the TradeStack research platform, its paper-trading status, architecture, methodology and roadmap. The website **does not connect to the trading engine, broker, Redis, or MongoDB**. It intentionally displays no live-account or unverified profit claims.
 
-Open `index.html` in a browser, or run:
+## Stack
 
-```bash
+- Semantic HTML5 and responsive CSS
+- Lightweight vanilla JavaScript (mobile navigation and copyright year)
+- Cloudflare Pages via GitHub integration
+- No Node build process, external dependencies, cookies or tracking scripts
+
+## Run locally
+
+Run from the repository root:
+
+\`\`\`bash
 python3 -m http.server 8080
-```
+\`\`\`
 
-Then visit http://localhost:8080.
+Open <http://localhost:8080>.
 
-## Deploy from GitHub (recommended)
+## Deploy
 
-1. Create a new repository named `tradestacks-website` (public or private).
-2. Upload all files from this directory to the **root of the repository**, not into an additional `tradestacks-site` subdirectory.
-3. Cloudflare > Workers & Pages > Create application > Pages > Connect to Git, and select the repository.
-4. For this pure static HTML site, set Framework preset to `None`, Build command to `exit 0`, and Build output directory to `.`.
-5. Deploy and test the generated `*.pages.dev` URL.
-6. Pages project > Custom domains > Set up a domain > `tradestacks.dev` > Continue.
-7. Cloudflare can manage the required DNS record for the domain because it is already in your Cloudflare account.
+Production is connected to \`main\` in the Cloudflare Pages project \`tradestacks-website\`.
 
-## Direct Upload (fastest for a first preview)
+| Setting | Value |
+| --- | --- |
+| Framework preset | None |
+| Production branch | \`main\` |
+| Build command | Leave blank |
+| Build output directory | \`.\` |
+| Custom domain | \`tradestacks.dev\` |
 
-Instead of Git integration you can create a Direct Upload Pages project and drag and drop a ZIP of the assets. IMPORTANT: Pages does not allow converting a Direct Upload project to Git integration later. You would need to create a new Pages project if you later want automatic GitHub deployments.
+Pull requests and other branches can generate preview deployments if enabled in Cloudflare.
 
-## Before making the site public
+## Editorial / security rules
 
-- Review all copy, especially claims about current features and development status.
-- Add your actual contact details or contact page if desired.
-- Confirm the security/legal/privacy material needed for your use case.
-- Avoid exposing broker tokens or endpoints on this static website.
-- GitHub profile link is currently https://github.com/vishaldkale01 (adjust if needed).
+- Paper trading and replay are not real-money performance. Always state execution mode.
+- Do not publish P&L, strategy metrics or simulated outcomes until validated with trading costs, fill assumptions and data-quality checks.
+- Do not publish API keys, tokens, account IDs, broker credentials, production URLs, or personal trading records.
+- Only describe features as available if confirmed in the corresponding service; distinguish experimental, validated and planned.
+- Never expose the local engine, Redis or MongoDB through the static website.
+
+## Current site sections
+
+Hero, platform, approach, research methodology, architecture, roadmap, FAQ and contact/GitHub.
+
+## Design notes
+
+The console illustration is a static conceptual mockup, **not actual market data**. The reported strategy/filter counts reflect the engine README's documented structure, and should be kept in sync as that code changes.
+
+The website source is public. The engine and gateway have separate access and licensing.
