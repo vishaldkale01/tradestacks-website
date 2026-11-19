@@ -3,77 +3,137 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090d14">
-  <meta name="description" content="TradeStack is a research-first algorithmic trading platform for Indian index options, with simulated execution, systematic risk controls and market-data replay.">
-  <meta property="og:title" content="TradeStack — Research, Replay, Refine">
-  <meta property="og:description" content="A research-first approach to index-options automation. Built around transparency, systematic risk and testable decisions.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tradestacks.dev/">
+  <meta name="theme-color" content="#080d12">
+  <meta name="description" content="TradeStack is an independent research and paper-trading platform for Indian index options. Explore rule-based signals, risk systems and reproducible market-data replay.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://tradestacks.dev/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/styles.css">
-  <title>TradeStack — Research. Replay. Refine.</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TradeStack — Engineering conviction, not predictions">
+  <meta property="og:description" content="Research-first systems for Indian index options. Analyze signals, simulate execution, measure risk and replay the evidence.">
+  <meta property="og:url" content="https://tradestacks.dev/">
+  <meta name="twitter:card" content="summary">
+  <title>TradeStack — Research-first Algorithmic Trading Systems</title>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a href="/" class="brand" aria-label="TradeStack home"><span class="brand-logo">T<span class="brand-dot">.</span></span><span>trade<span class="bright">stack</span><small>RESEARCH LAB</small></span></a>
-      <nav aria-label="Main navigation">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="#top" aria-label="TradeStack homepage">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 38 38" fill="none"><path d="M8 11h22M19 11v18M10 23l6-6 7 5 6-8" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+        <span class="brand-name">trade<span>stack</span><i>.</i><small>RESEARCH ENGINEERING</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a href="#platform">Platform</a>
-        <a href="#workflow">How it works</a>
+        <a href="#approach">Approach</a>
+        <a href="#research">Research</a>
+        <a href="#architecture">Architecture</a>
         <a href="#roadmap">Roadmap</a>
-        <a href="#about">About</a>
       </nav>
-      <a href="https://github.com/vishaldkale01/tradestacks-website" class="nav-action" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <a class="header-github" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
     </div>
   </header>
+
   <main id="main">
-    <section class="hero container">
-      <div class="eyebrow"><span class="live-dot"></span> INDEPENDENT ALGO-TRADING RESEARCH PROJECT <span class="vline"></span> INDIA</div>
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1>Trade smarter.<br><span class="gradient">Question everything.</span></h1>
-          <p>TradeStack explores algorithmic trading for Indian index options through real-time market analysis, simulated execution, robust risk controls, and reproducible market-data replay.</p>
-          <div class="hero-buttons">
-            <a href="#platform" class="btn btn-primary">Explore the platform <span aria-hidden="true">→</span></a>
-            <a href="#workflow" class="btn btn-ghost">How it works <span aria-hidden="true">↗</span></a>
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="eyebrow"><span class="signal-pulse" aria-hidden="true"></span> INDEPENDENT TRADING RESEARCH <span class="eyebrow-divider">/</span> INDIA</div>
+          <h1>Every trade has a story.<br><em>Make it <span>measurable.</span></em></h1>
+          <p class="hero-lead">TradeStack is an engineering-led research platform for Indian index options. From the first market tick to the final exit, we study how automated decisions are made—and how to test them.</p>
+          <div class="button-row">
+            <a class="button button-primary" href="#platform">Explore the system <span aria-hidden="true">↗</span></a>
+            <a class="button button-outline" href="#research">Our research process <span aria-hidden="true">→</span></a>
           </div>
-          <div class="note"><span class="note-mark">●</span> Research and paper-trading system. Not an investment advisory service.</div>
+          <div class="hero-caption"><span class="caption-dot" aria-hidden="true"></span> Currently in paper-trading and validation mode. No public live trading.</div>
         </div>
-        <div class="terminal" aria-label="Conceptual view of a TradeStack research pipeline">
-          <div class="terminal-head"><span class="dots"><i></i><i></i><i></i></span><span>TRADESTACK / SYSTEM OVERVIEW</span><span class="terminal-status">● RESEARCH MODE</span></div>
-          <div class="terminal-inner">
-            <div class="mono subdued">// deterministic decision pipeline</div>
-            <div class="pipeline-row"><div class="node-id">01</div><div><strong>Market data</strong><small>Index ticks · option chain · depth</small></div><span class="node-state">INPUT</span></div>
-            <div class="pipeline-stem"></div>
-            <div class="pipeline-row"><div class="node-id">02</div><div><strong>Signal evaluation</strong><small>Strategy rules · context · filters</small></div><span class="node-state">ANALYZE</span></div>
-            <div class="pipeline-stem"></div>
-            <div class="pipeline-row"><div class="node-id">03</div><div><strong>Risk engine</strong><small>Capital checks · exits · session limits</small></div><span class="node-state accent">GUARD</span></div>
-            <div class="pipeline-stem"></div>
-            <div class="pipeline-row"><div class="node-id">04</div><div><strong>Paper execution</strong><small>Simulated fills · trade lifecycle</small></div><span class="node-state">SIMULATE</span></div>
-            <div class="pipeline-stem"></div>
-            <div class="pipeline-row"><div class="node-id">05</div><div><strong>Review & replay</strong><small>Trade journal · historical recordings</small></div><span class="node-state">LEARN</span></div>
+
+        <div class="hero-showcase" aria-label="Illustration of the TradeStack research system, not live trading data">
+          <div class="mock-window">
+            <div class="mock-topbar"><div class="mock-dots" aria-hidden="true"><span></span><span></span><span></span></div><span>TRADESTACK / RESEARCH CONSOLE</span><span class="mock-tag">DEMO VIEW</span></div>
+            <div class="mock-body">
+              <div class="mock-chart-head"><div><span class="micro-label">MARKET CONTEXT</span><strong>From data to decisions</strong></div><span class="mode-badge"><span></span> PAPER MODE</span></div>
+              <div class="chart-space">
+                <div class="chart-grids" aria-hidden="true"></div>
+                <svg class="chart-svg" viewBox="0 0 520 158" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7df9c6" stop-opacity=".23"/><stop offset="1" stop-color="#7df9c6" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0 135L36 120L68 127L96 92L130 110L162 82L193 101L225 61L259 73L288 47L321 65L355 32L389 56L418 24L452 47L485 20L520 32V158H0Z" fill="url(#chartFill)"/>
+                  <path d="M0 135L36 120L68 127L96 92L130 110L162 82L193 101L225 61L259 73L288 47L321 65L355 32L389 56L418 24L452 47L485 20L520 32" stroke="#79EBC2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="485" cy="20" r="5" fill="#dffef3" stroke="#65d6aa" stroke-width="3"/>
+                </svg>
+                <span class="chart-note">ILLUSTRATIVE CHART · NOT MARKET DATA</span>
+              </div>
+              <div class="mock-detail"><span class="micro-label">DECISION PIPELINE</span><span class="mock-timestamp">RULE-BASED</span></div>
+              <div class="decision-pipeline">
+                <div class="pipe-step"><span class="pipe-number">01</span><div><strong>Market signal</strong><small>Trend · VWAP · momentum</small></div><span class="step-status">EVALUATE</span></div>
+                <div class="pipe-connector" aria-hidden="true"></div>
+                <div class="pipe-step active"><span class="pipe-number">02</span><div><strong>Risk validation</strong><small>Exposure · stops · session rules</small></div><span class="step-status">GUARD</span></div>
+                <div class="pipe-connector" aria-hidden="true"></div>
+                <div class="pipe-step"><span class="pipe-number">03</span><div><strong>Simulated execution</strong><small>Fill model · journal · replay</small></div><span class="step-status">RECORD</span></div>
+              </div>
+            </div>
+            <div class="mock-footer"><span>PYTHON / FASTAPI</span><span>UPSTOX DATA</span><span>REDIS / MONGODB</span></div>
           </div>
-          <div class="terminal-foot"><span>PYTHON</span><span>FASTAPI</span><span>REDIS</span><span>MONGODB</span></div>
+          <div class="side-float" aria-hidden="true"><span class="side-check">✓</span><span>Risk checks<br><b>before execution</b></span></div>
         </div>
       </div>
-      <div class="bottom-border"></div>
+      <div class="container trust-row"><span>BUILT FOR INSPECTION, NOT HYPE</span><div><strong>11</strong> strategy classes <i></i> <strong>13</strong> signal-filter stages <i></i> Tick-data replay <i></i> Paper-first execution</div></div>
     </section>
-    <section id="platform" class="container section">
-      <div class="section-kicker">01 / THE PLATFORM</div>
-      <div class="section-heading"><h2>Built to test ideas.<br><span>Not to promise outcomes.</span></h2><p>Every component is designed to make an automated trading decision inspectable, reproducible, and measurable.</p></div>
-      <div class="feature-grid">
-        <article class="feature-card"><div class="feature-icon">⌁</div><div class="feature-index">01 / ANALYZE</div><h3>Market intelligence</h3><p>Rule-based candidate signals and market context using VWAP, momentum, multi-timeframe trends and layered filters.</p></article>
-        <article class="feature-card"><div class="feature-icon">◇</div><div class="feature-index">02 / PROTECT</div><h3>Risk-first execution</h3><p>Designed around position management, stops, cooldowns and session-level loss controls—not unconstrained automation.</p></article>
-        <article class="feature-card"><div class="feature-icon">↺</div><div class="feature-index">03 / REPLAY</div><h3>Historical market replay</h3><p>Recorded market data can be replayed to investigate how strategies and simulated execution behave under past conditions.</p></article>
-        <article class="feature-card"><div class="feature-icon">▥</div><div class="feature-index">04 / EXPLAIN</div><h3>Trade-level diagnostics</h3><p>Capture signals, entries, exits and estimated trading costs to understand why a trading session gained or lost.</p></article>
+
+    <section class="section section-platform" id="platform">
+      <div class="container">
+        <div class="section-intro"><div><span class="section-overline">01 / THE PLATFORM</span><h2>A complete research loop.<br><span>Not just a signal generator.</span></h2></div><p>Explore the connected systems behind a strategy—what triggers an idea, which rules reject it, and what happens after a simulated entry.</p></div>
+        <div class="feature-layout">
+          <article class="feature-card feature-primary"><div class="feature-visual visual-signals" aria-hidden="true"><div class="visual-label">SIGNAL EVALUATION</div><div class="visual-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="visual-line"><span>VWAP</span><span>ADX</span><span>EMA</span><span>HTF</span></div></div><div class="feature-content"><span class="feature-index">01 / ANALYZE</span><h3>Market intelligence</h3><p>Rule-based setups use trend, momentum, price action and multi-timeframe context. Signals move through staged filters before they are considered for execution.</p></div></article>
+          <article class="feature-card"><div class="feature-icon">⌁</div><span class="feature-index">02 / CONTROL</span><h3>Risk before exposure</h3><p>Capital boundaries, session controls, stop management and market-depth checks shape how candidate trades are handled.</p><div class="feature-pill">RISK ENGINE</div></article>
+          <article class="feature-card"><div class="feature-icon">⟲</div><span class="feature-index">03 / REPLAY</span><h3>Replay the session</h3><p>Recorded ticks and depth events are used for historical replay, fill simulation and repeatable strategy investigations.</p><div class="feature-pill">PARQUET RECORDINGS</div></article>
+          <article class="feature-card feature-wide"><div><span class="feature-index">04 / LEARN</span><h3>The explanation matters as much as the outcome.</h3><p>Journal entries, rejected signals, exit reasons and trading costs help connect results back to the decisions that produced them.</p><a class="text-link" href="#research">See the research workflow <span aria-hidden="true">↗</span></a></div><div class="evidence-visual" aria-hidden="true"><span>TRADE REVIEW</span><div><i></i> Signal context <b>CAPTURED</b></div><div><i></i> Entry / exit path <b>LOGGED</b></div><div><i></i> Costs & slippage <b>REVIEW</b></div><div><i></i> Replay coverage <b>CHECKED</b></div></div></article>
+        </div>
       </div>
     </section>
-    <section id="workflow" class="section workflow-section"><div class="container workflow-grid"><div><div class="section-kicker">02 / OUR APPROACH</div><h2>Observe.<br>Simulate.<br><span>Improve.</span></h2><p class="workflow-copy">TradeStack separates research and simulation from real-money execution. The goal is a more trustworthy engineering process, not a guaranteed profit curve.</p></div><div class="steps"><div class="step"><span>01</span><div><h3>Listen to the market</h3><p>Process real-time index and option data into structured signals.</p></div></div><div class="step"><span>02</span><div><h3>Check the risk</h3><p>Evaluate execution conditions and predefined session limits.</p></div></div><div class="step"><span>03</span><div><h3>Paper trade and record</h3><p>Simulate positions and preserve useful decision evidence.</p></div></div><div class="step"><span>04</span><div><h3>Replay and investigate</h3><p>Audit outcomes, costs, and strategy behavior before changing rules.</p></div></div></div></div></section>
-    <section id="roadmap" class="container section"><div class="section-kicker">03 / WHERE WE'RE HEADED</div><div class="section-heading"><h2>Building in public.<br><span>Improving with evidence.</span></h2><p>Our research roadmap focuses on reliability, transparency, and reproducible results.</p></div><div class="roadmap"><div><span class="roadmap-label">CURRENT FOCUS</span><h3>Paper-trading infrastructure</h3><p>Trade lifecycle tracking, risk controls, persisted events and session diagnostics.</p></div><div><span class="roadmap-label">IN PROGRESS / PLANNED</span><h3>Better replay and validation</h3><p>Stronger cost models, recorded-session checks and backtest evidence.</p></div><div><span class="roadmap-label">LONGER TERM</span><h3>Research visibility</h3><p>Carefully validated aggregate analytics and documentation for the wider developer community.</p></div></div></section>
-    <section id="about" class="container about"><div><div class="section-kicker">04 / ABOUT TRADESTACK</div><h2>An engineering project<br>at the intersection of<br><span>markets and systems.</span></h2><p>TradeStack is an independent developer project studying reliable, measurable automated trading workflows for Indian financial markets.</p><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer" class="inline-link">Follow development on GitHub ↗</a></div><div class="about-aside"><div class="about-title">TECHNOLOGY</div><div class="tech"><span>Python</span><span>FastAPI</span><span>Node.js</span><span>Upstox API</span><span>Redis</span><span>MongoDB</span><span>Parquet</span></div><div class="small-print">System components and planned features may evolve. This site does not provide a public trading service.</div></div></section>
+
+    <section class="section approach-section" id="approach">
+      <div class="container approach-grid">
+        <div><span class="section-overline">02 / THE METHOD</span><h2>No black box.<br><span>A visible process.</span></h2><p>TradeStack treats a trading strategy as a system to inspect and challenge—not a prediction to blindly trust.</p><div class="approach-quote">“A useful system is one that makes its assumptions testable.”</div></div>
+        <div class="timeline">
+          <div class="timeline-step"><span>01</span><div><h3>Capture the market</h3><p>Stream index and options data into a consistent analysis pipeline.</p></div></div>
+          <div class="timeline-step"><span>02</span><div><h3>Form and filter a hypothesis</h3><p>Evaluate setup logic, market context and predefined risk constraints.</p></div></div>
+          <div class="timeline-step"><span>03</span><div><h3>Simulate, then record</h3><p>Run paper execution with tracked lifecycle events and modeled fills.</p></div></div>
+          <div class="timeline-step"><span>04</span><div><h3>Reproduce the outcome</h3><p>Replay available recordings, review costs and adjust rules based on evidence.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section research-section" id="research">
+      <div class="container research-grid">
+        <div class="research-copy"><span class="section-overline">03 / THE RESEARCH LAB</span><h2>Results need context.<br><span>Especially the losses.</span></h2><p>We aim to publish useful, clearly labeled research—not selective screenshots of winning trades. Performance reporting remains under validation while trade records, charges and exit classifications are reconciled.</p><ul class="research-list"><li><span>✓</span> Net performance after estimated trading costs</li><li><span>✓</span> Winning and losing setups by market conditions</li><li><span>✓</span> Drawdown, expectancy and exit-reason analysis</li><li><span>✓</span> Replay completeness and model assumptions</li></ul><a class="text-link" href="#roadmap">Follow the reporting roadmap <span aria-hidden="true">↗</span></a></div>
+        <div class="research-panel"><div class="panel-top"><span>RESEARCH / REPORTING STANDARD</span><span class="panel-state">IN VALIDATION</span></div><div class="report-intro">What a trustworthy report should show</div><div class="report-row"><span>01 <b>Execution mode</b></span><strong>PAPER / REPLAY</strong></div><div class="report-row"><span>02 <b>Trading costs</b></span><strong>INCLUDED</strong></div><div class="report-row"><span>03 <b>Unexplained exits</b></span><strong>FLAGGED</strong></div><div class="report-row"><span>04 <b>Recorded data quality</b></span><strong>DISCLOSED</strong></div><div class="report-bottom"><span class="sparkle">✳</span><span>No fabricated P&amp;L. No implied live returns. No profit guarantees.</span></div></div>
+      </div>
+    </section>
+
+    <section class="section architecture-section" id="architecture">
+      <div class="container">
+        <div class="section-intro"><div><span class="section-overline">04 / UNDER THE HOOD</span><h2>Designed like software.<br><span>Tested like a strategy.</span></h2></div><p>A modular research stack separates the market feed, strategy engine, risk decisions, paper execution and historical analysis.</p></div>
+        <div class="arch-rail" aria-label="TradeStack system flow"><div><span class="arch-icon">01</span><strong>Market feed</strong><small>Upstox V3</small></div><span class="arch-arrow" aria-hidden="true">→</span><div><span class="arch-icon">02</span><strong>Signal engine</strong><small>Python / FastAPI</small></div><span class="arch-arrow" aria-hidden="true">→</span><div><span class="arch-icon">03</span><strong>Risk checks</strong><small>Redis state</small></div><span class="arch-arrow" aria-hidden="true">→</span><div><span class="arch-icon">04</span><strong>Paper trades</strong><small>Simulated fills</small></div><span class="arch-arrow" aria-hidden="true">→</span><div><span class="arch-icon">05</span><strong>Research</strong><small>MongoDB / Parquet</small></div></div>
+        <div class="architecture-bottom"><div><strong>Technology with a purpose.</strong><p>Each component has a specific role in execution reliability and reproducible analysis.</p></div><div class="tech-tags"><span>PYTHON</span><span>FASTAPI</span><span>NODE.JS</span><span>REDIS</span><span>MONGODB</span><span>PARQUET</span><span>UPSTOX API</span></div></div>
+      </div>
+    </section>
+
+    <section class="section roadmap-section" id="roadmap">
+      <div class="container"><div class="section-intro"><div><span class="section-overline">05 / WHAT'S NEXT</span><h2>Built in iterations.<br><span>Improved with evidence.</span></h2></div><p>We prioritize honest research, reliable order and data handling, and better tools for understanding decisions.</p></div><div class="roadmap-grid"><article><span class="roadmap-status ready"><i></i> CURRENT FOUNDATION</span><h3>Paper-trading engine</h3><p>Market analysis, simulated trades, event logging and configurable risk systems form the research foundation.</p></article><article><span class="roadmap-status ongoing"><i></i> ACTIVE VALIDATION</span><h3>Replay &amp; reporting quality</h3><p>Improving cost modeling, exit attribution, recording completeness and strategy-level evaluation.</p></article><article><span class="roadmap-status later"><i></i> PLANNED</span><h3>Public research updates</h3><p>Clear documentation and responsibly validated research summaries, with simulation explicitly distinguished from live performance.</p></article></div></div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="container faq-grid"><div><span class="section-overline">06 / THE IMPORTANT DETAILS</span><h2>Clear expectations.<br><span>Better conversations.</span></h2></div><div class="faq-items"><details><summary>Can I connect my brokerage account and trade here?<span aria-hidden="true">+</span></summary><p>Not currently. This public website presents an independent research project; it is not a public trading service. The project's gateway currently supports restricted paper-trading sessions.</p></details><details><summary>Are the results from live trading?<span aria-hidden="true">+</span></summary><p>No live-account performance is claimed here. Research and simulation results must be labeled and verified before publication.</p></details><details><summary>Is TradeStack open source?<span aria-hidden="true">+</span></summary><p>This website's source is public on GitHub. Availability and licenses for other TradeStack components vary; not all system code is publicly available.</p></details><details><summary>Where can I follow the project?<span aria-hidden="true">+</span></summary><p>Visit the <a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">website repository on GitHub</a> for the latest website changes and feedback discussions.</p></details></div></div>
+    </section>
+
+    <section class="contact-section" id="contact"><div class="container contact-inner"><div><span class="section-overline">LET'S BUILD BETTER SYSTEMS</span><h2>Curious about what's<br><em>behind the trade?</em></h2><p>Explore the project, follow its development or share feedback with the TradeStack research lab.</p></div><a class="button button-primary" href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">Explore on GitHub <span aria-hidden="true">↗</span></a></div></section>
   </main>
-  <footer class="footer"><div class="container"><div class="footer-line"><a href="/" class="footer-brand">trade<span>stack</span><b>.</b></a><span>Research. Replay. Refine.</span></div><p>For education, software development and independent research. Paper or simulated results are not actual live-account returns. Nothing on this site constitutes investment advice or a promise of profitability. Trading in derivatives involves substantial risk.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>tradestacks.dev</span><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div></footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+
+  <footer class="site-footer"><div class="container"><div class="footer-main"><div><a class="footer-wordmark" href="#top">trade<span>stack</span><b>.</b></a><p>Research. Replay. Refine.<br>Independent algo-trading engineering.</p></div><div class="footer-links"><a href="#platform">Platform</a><a href="#research">Research</a><a href="#architecture">Architecture</a><a href="#roadmap">Roadmap</a><a href="https://github.com/vishaldkale01/tradestacks-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div><p class="legal-copy">For education, software engineering and independent research. TradeStack is not a broker, investment advisor, or publicly available live-execution service. Simulated outcomes are not live-account returns. Derivatives trading involves substantial financial risk; past or simulated performance does not guarantee future results.</p><div class="footer-bottom"><span>© <span id="year">2026</span> TradeStack</span><span>Built for transparency · India</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <script src="/site.js" defer></script>
 </body>
 </html>
