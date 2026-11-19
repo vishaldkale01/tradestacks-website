@@ -52,3 +52,22 @@ Hero, platform, approach, research methodology, architecture, roadmap, FAQ and c
 The console illustration is a static conceptual mockup, **not actual market data**. The reported strategy/filter counts reflect the engine README's documented structure, and should be kept in sync as that code changes.
 
 The website source is public. The engine and gateway have separate access and licensing.
+
+## Project sources and public positioning
+
+Website content was reviewed against the `algo-execution-service` Python project (private) and `upstox_api_integration` Node.js/Upstox gateway (public). The website does not expose private repository contents, trading credentials or customer information. Historical replay is implemented but not claimed fully validated. The restricted gateway explicitly disables public live orders.
+
+## Public pages and contact links
+
+- `index.html`: Landing page, services and roadmap
+- `platform.html`: Feature breakdown of the Python engine and Node gateway
+- `architecture.html`: Technical components, state and paper trade data flow
+- `research.html`: Recording, replay, costs and investigation standards
+- `contact.html`: LinkedIn, YouTube and GitHub community links
+
+Official links supplied for this site:
+- LinkedIn: https://www.linkedin.com/in/algodev01/
+- YouTube: https://www.youtube.com/@tradeStack01
+- GitHub website repository: https://github.com/vishaldkale01/tradestacks-website
+
+These links are user-provided/owned project destinations; there is no public email address or subscription form.
